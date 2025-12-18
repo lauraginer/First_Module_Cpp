@@ -6,7 +6,7 @@
 #    By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/13 21:12:26 by lginer-m          #+#    #+#              #
-#    Updated: 2025/12/16 20:38:00 by lginer-m         ###   ########.fr        #
+#    Updated: 2025/12/18 20:18:42 by lginer-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
 
 OBJS_DIR := build
 
-SRCS = main.cpp
+SRCS = main.cpp Contact.cpp
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 
 BLUE = \033[0;34m
