@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:30:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/18 20:19:14 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:03:31 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ public:
 	std::string getDarkestSecret();
 
 	//Setters (modifican el valor)
-	void setFirstName(std::string name);
-	void setLastName(std::string last);
-	void setNickname(std::string nick);
-	void setPhoneNumber(std::string phone);
-	void setDarkestSecret(std::string secret);
+	int setFirstName(std::string name);
+	int setLastName(std::string last);
+	int setNickname(std::string nick);
+	int setPhoneNumber(std::string phone);
+	int setDarkestSecret(std::string secret);
 	
     // declaraciones de funciones en teoria
 };

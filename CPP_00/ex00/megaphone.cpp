@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:36:14 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/13 21:01:56 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:10:07 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 				j++;
 			}	
 			i++;
+			std::cout << " ";
 		}
 	}
 	std::cout << std::endl;
