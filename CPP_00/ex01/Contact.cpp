@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:50:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/19 21:02:36 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:18:22 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,29 @@ std::string Contact::getDarkestSecret()
 }
 
 //Funciones de setters
-int Contact::setFirstName(std::string name)
+void Contact::setFirstName(std::string name)
 {
 	firstName = name;
-	return(0);
+	return ;
 }
-int Contact::setLastName(std::string last)
+void Contact::setLastName(std::string last)
 {
-	if(last.empty()) //getter
-	{
-		std::cout << "Can't be empty!" << std::endl;
-		return(1);
-	}
 	lastName = last;
-	return(0);
+	return ;
 }
-int Contact::setNickname(std::string nick)
+void Contact::setNickname(std::string nick)
 {
-	if(nick.empty()) //getter
-	{
-		std::cout << "Can't be empty!" << std::endl;
-		return(1);
-	}
 	nickname = nick;
-	return(0);
+	return ;
 }
-int Contact::setPhoneNumber(std::string phone)
+void Contact::setPhoneNumber(std::string phone)
 {
-	if(phone.empty()) //getter
-	{
-		std::cout << "Can't be empty!" << std::endl;
-		return(1);
-	}
 	phoneNumber = phone;
-	return(0);
+	return ;
 }
-int Contact::setDarkestSecret(std::string secret)
+void Contact::setDarkestSecret(std::string secret)
 {
-	if(secret.empty()) //getter
-	{
-		std::cout << "Can't be empty!" << std::endl;
-		return(1);
-	}
-	darkestSecret= secret;
-	return(0);
+	darkestSecret = secret;
+	return ;
 }
 

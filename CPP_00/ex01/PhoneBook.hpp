@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:32:36 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/19 20:06:56 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:00:04 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ private:
     //int oldest;            // para saber a quién sobrescribir
 
 public:
-  // declaraciones de funciones en teoria
-  void addContact();
-  int createPhonebook();
-  
+	void addContact();
+	int createPhonebook();
+	void checkEmpty(bool &flag, std::string &input, std::string message);
+	void uploadInput(std::string &input, bool &flag); 
+	//importante!! pasamos por referencia porque si no se crea una copia de la var automaticamente
 };
 
 #endif

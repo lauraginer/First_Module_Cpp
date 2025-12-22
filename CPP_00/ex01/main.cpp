@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:14:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/19 20:52:55 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:05:46 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ int main()
 		getline(std::cin, input); 
 		if(input == "ADD")
 		{ 
-			Contact aux;
 			phonebook.addContact();
-			phonebook.createPhonebook();
+			//phonebook.createPhonebook();
 		}
 		else if(input == "SEARCH")
 			std::cout << "SEARCH\n";
