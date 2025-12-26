@@ -6,13 +6,14 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:32:36 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 01:36:55 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:00 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHONEBOOK_HPP
 #define PHONEBOOK_HPP
 
+#include <string>
 #include "Contact.hpp"
 
 class PhoneBook {
@@ -26,10 +27,11 @@ public:
 	PhoneBook();  // Constructor(inicializa las variables)
 	void addContact();
 	int createPhonebook();
-	void checkEmpty(bool &flag, std::string &input, std::string message);
-	void uploadInput(std::string &input, bool &flag);
-	int parserPhoneNumber(std::string &phone);
+	void checkEmpty(std::string &input, std::string message);
+	int parseNumber(std::string &phone);
 	void saveContact(Contact contact);
+	std::string truncateField(std::string field);
+	int enterIndex(std::string input);
 	//importante!! pasamos por referencia porque si no se crea una copia de la var automaticamente
 };
 

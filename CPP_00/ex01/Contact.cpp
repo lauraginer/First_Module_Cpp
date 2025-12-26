@@ -6,13 +6,11 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:50:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 01:24:46 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/26 22:49:57 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-#include "PhoneBook.hpp"
-#include <cstdio>
 
 std::string Contact::getFirstName()
 {

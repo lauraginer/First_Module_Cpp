@@ -6,13 +6,16 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 13:32:49 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 01:41:38 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:05 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
-#include <string>
+#include <iostream>
+#include <iomanip>
+#include <cctype>
+#include <cstdlib>
 
 // Constructor
 PhoneBook::PhoneBook() : count(0), index(0), totalContacts(0)
@@ -22,76 +25,61 @@ PhoneBook::PhoneBook() : count(0), index(0), totalContacts(0)
 // Fuction ADD
 void PhoneBook::addContact()
 {
-	Contact contact; //creamos el objeto
-	std::string input = "";
-	bool first_iteration = true;
+	Contact contact;
+	std::string input;
 	
-	checkEmpty(first_iteration, input, "Enter a first name:\n");
+	checkEmpty(input, "Enter a first name:\n");
 	contact.setFirstName(input);
-	uploadInput(input, first_iteration);
-	checkEmpty(first_iteration, input, "Enter a last name:\n");
+	checkEmpty(input, "Enter a last name:\n");
 	contact.setLastName(input);
-	uploadInput(input, first_iteration);
-	checkEmpty(first_iteration, input, "Enter a nickname:\n");
+	checkEmpty(input, "Enter a nickname:\n");
 	contact.setNickname(input);
-	uploadInput(input, first_iteration);
-	while(true)
+	while(1)
 	{
-		checkEmpty(first_iteration, input, "Enter a phone number:\n");
-		if(parserPhoneNumber(input) == 0)
+		checkEmpty(input, "Enter a phone number:\n");
+		if(parseNumber(input) == 0)
 		{	
 			contact.setPhoneNumber(input);
 			break;
 		}
-		uploadInput(input, first_iteration);
 	}
-	uploadInput(input, first_iteration);
-	checkEmpty(first_iteration, input, "Enter a darkest secret!:\n");
+	checkEmpty(input, "Enter a darkest secret!:\n");
 	contact.setDarkestSecret(input);
-	contact.setId(totalContacts);  // Asignar ID único
+	contact.setId(totalContacts);
 	saveContact(contact);
 }
 
-void PhoneBook::uploadInput(std::string &input, bool &flag)
+void PhoneBook::checkEmpty(std::string &input, std::string message)
 {
-	input = "";
-	flag = true;
-}
-
-void PhoneBook::checkEmpty(bool &flag, std::string &input, std::string message)
-{
-	while(input.empty()) //habria que repetir en cada llamada
+	while(1)
 	{
-		if(!flag)
-			std::cout << "Can't be empty!\n";
 		std::cout << message;
-		std::getline(std::cin, input); //guardamos la entrada en nueva str
-		flag = false;
+		std::getline(std::cin, input);
+		if(input.empty())
+			std::cout << "Can't be empty!\n";
+		else
+			break;
 	}
 }
 
-int PhoneBook::parserPhoneNumber(std::string &phone)
+int PhoneBook::parseNumber(std::string &phone)
 {
-	int value = 0;
 	int i = 0;
-	
 	while(phone[i])
 	{
 		if(isalpha(phone[i]) != 0)
 		{
 			std::cout << "Wrong number!\n";
-			value = 1;
-			break;
+			return (1);
 		}
 		if((phone[i] >= 33 && phone[i] <= 47) || (phone[i] >= 58 && phone[i] <= 64) || (phone[i] >= 91 && phone[i] <= 96))
 		{
 			std::cout << "Can't accept special characters!\n";
-			value = 1;
-			break;
+			return (1);
 		}
 		i++;
 	}
-	return(value);
+	return (0);
 }
 
 void PhoneBook::saveContact(Contact contact)
@@ -100,26 +88,64 @@ void PhoneBook::saveContact(Contact contact)
     index = (index + 1) % 8; //el resto siempre va a dar el mismo numero hasta llegar al 8
     if (count < 8)
         count++;
-    totalContacts++;  // Incrementar contador total
+    totalContacts++;  // sumamos al contador real
 }
 
 // Fuction SEARCH
 int PhoneBook::createPhonebook()
 {
 	int i = 0;
-	
+	if (count == 0)
+    {
+        std::cout << "\nPhonebook is empty! Add contacts first.\n" << std::endl;
+        return (1);
+    }
 	std::cout << std::endl;
 	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
 	std::cout << "|----------|----------|----------|----------|" << std::endl;
-
 	while(i < count)
 	{
 		std::cout << "|" << std::setw(10) << std::right << contacts[i].getId() << "|"
-		<< std::setw(10) << std::right << contacts[i].getFirstName() << "|"
-		<< std::setw(10) << std::right << contacts[i].getLastName() << "|"
-		<< std::setw(10) << std::right << contacts[i].getNickName() << "|"
+		<< std::setw(10) << std::right << truncateField(contacts[i].getFirstName()) << "|"
+		<< std::setw(10) << std::right << truncateField(contacts[i].getLastName()) << "|"
+		<< std::setw(10) << std::right << truncateField(contacts[i].getNickName()) << "|"
    		<< std::endl;
 		i++;
 	}
 	return (0);
+}
+
+std::string PhoneBook::truncateField(std::string field)
+{
+	std::string newStr; //utilizamos field. lo que sea porque std::string es una clase!!!
+	if (field.length() > 10)
+	{
+		newStr = field.substr(0, 9) + "."; //extraemos la subcadena
+		return (newStr);
+	}
+	newStr = field;
+	return (newStr);
+}
+
+int PhoneBook::enterIndex(std::string input)
+{
+	int i = 0;
+	if(parseNumber(input) == 1)  // Si hay error, retorna
+		return (1);
+	int idx = std::atoi(input.c_str());
+	while(i < count)
+	{
+		if(contacts[i].getId() == idx)
+		{
+			std::cout << "\nFirst name: " << contacts[i].getFirstName() << std::endl;
+			std::cout << "Last name: " << contacts[i].getLastName() << std::endl;
+			std::cout << "Nickname: " << contacts[i].getNickName() << std::endl;
+			std::cout << "Phone number: " << contacts[i].getPhoneNumber() << std::endl;
+			std::cout << "Dark secret: " << contacts[i].getDarkestSecret() << std::endl;
+			return (0);
+		}
+		i++;
+	}
+	std::cout << "Wrong index!\n";
+	return (1);
 }

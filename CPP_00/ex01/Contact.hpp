@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:30:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 01:24:43 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/26 22:49:52 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #define CONTACT_HPP
 
 #include <string>
-#include <iostream>
-#include <cstdlib>
-#include <cctype>
-#include <iomanip>
 
 class Contact {
 private:
