@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:50:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/22 12:18:22 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:24:46 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ std::string Contact::getDarkestSecret()
 	return(darkestSecret);
 }
 
+int Contact::getId()
+{
+	return(id);
+}
+
 //Funciones de setters
 void Contact::setFirstName(std::string name)
 {
@@ -61,6 +66,12 @@ void Contact::setPhoneNumber(std::string phone)
 void Contact::setDarkestSecret(std::string secret)
 {
 	darkestSecret = secret;
+	return ;
+}
+
+void Contact::setId(int contactId)
+{
+	id = contactId;
 	return ;
 }
 

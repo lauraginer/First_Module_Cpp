@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:30:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/22 12:18:52 by lginer-m         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:24:43 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <cctype>
+#include <iomanip>
 
 class Contact {
 private:
@@ -24,6 +26,7 @@ private:
     std::string nickname;
     std::string phoneNumber;
     std::string darkestSecret;
+    int id;
 
 public:
 
@@ -33,6 +36,7 @@ public:
 	std::string getNickName();
 	std::string getPhoneNumber();
 	std::string getDarkestSecret();
+	int getId();
 
 	//Setters (modifican el valor)
 	void setFirstName(std::string name);
@@ -40,6 +44,7 @@ public:
 	void setNickname(std::string nick);
 	void setPhoneNumber(std::string phone);
 	void setDarkestSecret(std::string secret);
+	void setId(int contactId);
 	
     // declaraciones de funciones en teoria
 };
