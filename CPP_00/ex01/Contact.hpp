@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:30:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 22:49:52 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/26 22:59:52 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ public:
 	void setPhoneNumber(std::string phone);
 	void setDarkestSecret(std::string secret);
 	void setId(int contactId);
-	
-    // declaraciones de funciones en teoria
 };
 
 #endif
