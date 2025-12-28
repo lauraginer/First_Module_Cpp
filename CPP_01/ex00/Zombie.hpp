@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:32:40 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/28 15:39:35 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/28 21:39:40 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,17 @@
 
 class Zombie {
 private:
-	std::string name;
+	std::string		name;
 
 public:
-	void			announce (void);
+	Zombie(std::string name);  //constructor
+	~Zombie();  //destructor
+	void announce(void);
+	
 };
+
+// Funciones globales (no son métodos de la clase)
+Zombie* newZombie(std::string name);
+void randomChump(std::string name);
 
 #endif

@@ -6,13 +6,19 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:32:28 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/28 15:43:23 by lauragm          ###   ########.fr       */
+/*   Updated: 2025/12/28 21:17:38 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "zombie.hpp"
+#include "Zombie.hpp"
 
-Zombie* newZombie( std::string name );
+Zombie* newZombie(std::string name)
+{
+	Zombie* zombie;
+	
+	zombie = new Zombie(name);
+	return zombie;
+}
 //esta funcion crea un zombie, asigna un nombre, y devuelve el zombie para poder usarlo
 //fuera del ambito de la funcion
 
