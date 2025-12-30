@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/28 15:47:42 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/30 21:03:05 by lauragm          ###   ########.fr       */
+/*   Created: 2025/12/30 20:23:49 by lauragm           #+#    #+#             */
+/*   Updated: 2025/12/30 21:34:58 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,17 @@
 
 int main()
 {
-	Zombie* heapZombie;
-	Zombie* heapTwoZombie;
-	Zombie* heapThreeZombie;
+	Zombie *hordezombie;
+	int N;
+	int i = 0;
 	
-	randomChump("Michael");
-	randomChump("Robert");
-	//Zombie en HEAP (newZombie), guardamos el puntero y hacer delete manual
-	heapZombie = newZombie("Laura");
-	heapTwoZombie = newZombie("Marie");
-	heapThreeZombie = newZombie("Frankenstein");
-	heapZombie->announce();
-	heapTwoZombie->announce();
-	heapThreeZombie->announce();
-	delete heapZombie; //despues de delete, se llama al destructor automaticamente
-	delete heapTwoZombie;
-	delete heapThreeZombie;
-	
-	return (0);
+	N = 3;
+	hordezombie = zombieHorde(N, "Jose");
+	while(i < N)
+	{
+		hordezombie[i].announce();  //Llamar al método desde el objeto
+		i++;
+	}
+	delete[] hordezombie;
+	return(0);
 }
