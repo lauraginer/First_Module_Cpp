@@ -1,0 +1,12 @@
+std::ifstream infile(filename.c_str());
+//    ↑         ↑            ↑
+//  Clase    Objeto    Parámetro del constructor
+
+Un constructor no recibe funciones, recibe el resultado de las funciones
+std::ifstream infile(filename.c_str());
+//                   ↑
+//                   Primero se EJECUTA c_str()
+//                   Retorna: const char* ("archivo.txt")
+//                   Ese valor se pasa al constructor
+
+Necesito buscar más informacion de tanto la clase ifstream como ofstream

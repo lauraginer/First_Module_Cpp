@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/12/30 22:29:45 by lauragm           #+#    #+#              #
-#    Updated: 2025/12/31 14:20:42 by lauragm          ###   ########.fr        #
+#    Created: 2025/12/31 14:40:47 by lauragm           #+#    #+#              #
+#    Updated: 2025/12/31 14:55:59 by lauragm          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := weapon
+NAME := replace
 CC := c++
 CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
 		#-fsanitize=address,undefined \
@@ -18,7 +18,7 @@ CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
 
 OBJS_DIR := build
 
-SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
+SRCS = main.cpp
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 
 BLUE = \033[0;34m
