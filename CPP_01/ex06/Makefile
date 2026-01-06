@@ -6,11 +6,11 @@
 #    By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/01 21:27:03 by lauragm           #+#    #+#              #
-#    Updated: 2026/01/06 16:36:42 by lauragm          ###   ########.fr        #
+#    Updated: 2026/01/06 16:36:49 by lauragm          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := harl
+NAME := harlFilter
 CC := c++
 CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
 		#-fsanitize=address,undefined \

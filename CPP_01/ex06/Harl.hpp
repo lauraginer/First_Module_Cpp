@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 21:27:07 by lauragm           #+#    #+#             */
-/*   Updated: 2026/01/06 19:15:23 by lauragm          ###   ########.fr       */
+/*   Created: 2026/01/01 21:26:52 by lauragm           #+#    #+#             */
+/*   Updated: 2026/01/01 21:30:59 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Harl.hpp"
-#include <iostream>
+#ifndef HARL_HPP
+#define HARL_HPP
 
-int main(int argc, char **argv)
-{
-	Harl harl;
+#include <string>
+
+class Harl{
+private:
+	void debug(void);
+	void info(void);
+	void warning(void);
+	void error(void);
 	
-	if(argc == 2)
-		harl.complain(argv[1]);
-	else
-	{
-		std::cout << "Error: You need only one input!\n";
-		return(1);
-	}
-	return(0);
-}
+public:
+	void complain(std::string level);
+};
+
+#endif
 

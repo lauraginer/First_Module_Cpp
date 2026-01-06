@@ -1,0 +1,15 @@
+El switch en C++ es una estructura de control condicional que permite ejecutar diferentes
+bloques de código (casos) basados en el valor de una variable o expresión, ideal para múltiples
+selecciones, usando palabras clave como switch, case para valores específicos y default para
+el resto, además de break para salir de cada caso y evitar el "fallthrough" (ejecución del
+siguiente caso). 
+
+Por qué es necesario aquí, EN ESTE EJERCICIO, añadir comentarios especificos de fallthrought:
+En este ejercicio, QUIERES que pase de un caso al siguiente (fall through), por lo que 
+no debemos de añadir break en cada caso (saldria sin más):
+
+Si ejecutas ./harlFilter DEBUG → imprime DEBUG, INFO, WARNING, ERROR (todos)
+Si ejecutas ./harlFilter INFO → imprime INFO, WARNING, ERROR (desde INFO en adelante)
+
+El compilador GCC tiene un warning -Werror=implicit-fallthrough que detecta cuando un case pasa al siguiente sin break y no está documentado.
+Solución: Agregar comentarios especiales que GCC reconoce, como los actuales.

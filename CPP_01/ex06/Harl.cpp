@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 21:27:11 by lauragm           #+#    #+#             */
-/*   Updated: 2026/01/06 16:38:03 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/06 19:06:51 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,45 @@ void Harl::complain(std::string level)
 {
 	std::string levels[4] = { "DEBUG", "INFO", "WARNING", "ERROR" };
 	void (Harl::*functions[4])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+	int index_levels = -1;  // inicializado en -1 para en caso de error
 	int i = 0;
 	
 	while(i < 4)
 	{
 		if(levels[i] == level)
 		{
-			(this->*functions[i])(); //llamanos a la funcion que le corresponde
-			return;
+			index_levels = i;
+			break;
 		}
 		i++;
 	}
-	std::cout << "Error: Incorrect option\n";	
+	switch(index_levels) //switch no acepta strings, pero si int entre otros
+	{
+		case 0:
+		{
+			std::cout << "[ DEBUG ]\n";
+			(this->*functions[0])();
+		}
+		// fall through
+		case 1:
+		{
+			std::cout << "[ INFO ]\n";
+			(this->*functions[1])();
+		}
+		// fall through
+		case 2:
+		{
+			std::cout << "[ WARNING ]\n";
+			(this->*functions[2])();
+		}
+		// fall through
+		case 3:
+		{
+			std::cout << "[ ERROR ]\n";
+			(this->*functions[3])();
+		}
+		break;
+		default:
+			std::cout << "[ Probably complaining about insignificant problems ]\n";
+	}
 }
