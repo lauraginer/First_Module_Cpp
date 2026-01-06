@@ -230,7 +230,7 @@ El **Módulo CPP_01** profundiza en la gestión de memoria y referencias en C++.
 
 **Conceptos**: Memoria dinámica en stack vs heap
 
-\`\`\`cpp
+```cpp
 // Stack - destrucción automática
 Zombie z("Stack");
 
@@ -241,11 +241,11 @@ delete z;
 // Arrays
 Zombie* horde = new Zombie[10];
 delete[] horde;  // ¡[] obligatorio!
-\`\`\`
+```
 
 ### ex02: Punteros vs Referencias
 
-\`\`\`cpp
+```cpp
 std::string str = "HI THIS IS BRAIN";
 std::string* stringPTR = &str;  // Puntero
 std::string& stringREF = str;   // Referencia
@@ -253,40 +253,40 @@ std::string& stringREF = str;   // Referencia
 // Acceso
 *stringPTR;  // Dereferencia con *
 stringREF;   // Acceso directo
-\`\`\`
+```
 
 | Puntero | Referencia |
 |---------|------------|
 | Puede ser NULL | DEBE inicializarse |
 | Se puede reasignar | NO cambia destino |
-| \`*ptr\` para acceder | Acceso directo |
+| `*ptr` para acceder | Acceso directo |
 
 ### ex03: Weapon - Referencias vs Punteros
 
 **HumanA** - Referencia (siempre tiene arma):
-\`\`\`cpp
+```cpp
 class HumanA {
     Weapon& weapon;  // Inicializada en constructor
 public:
     HumanA(std::string n, Weapon& w) : weapon(w) {}
 };
-\`\`\`
+```
 
 **HumanB** - Puntero (puede no tener arma):
-\`\`\`cpp
+```cpp
 class HumanB {
     Weapon* weapon;  // Puede ser NULL
 public:
     HumanB(std::string n) : weapon(NULL) {}
     void setWeapon(Weapon& w) { weapon = &w; }
 };
-\`\`\`
+```
 
 ### ex04: Sed is for losers
 
-Reemplazar strings en archivos sin usar \`std::string::replace\`.
+Reemplazar strings en archivos sin usar `std::string::replace`.
 
-\`\`\`cpp
+```cpp
 // Buscar todas las ocurrencias
 while ((pos = line.find(s1, pos)) != std::string::npos)
 {
@@ -294,16 +294,16 @@ while ((pos = line.find(s1, pos)) != std::string::npos)
     line.insert(pos, s2);
     pos += s2.length();  // Evita bucle infinito
 }
-\`\`\`
+```
 
-**\`std::string::npos\`**: Constante que significa "no encontrado"
+**`std::string::npos`**: Constante que significa "no encontrado"
 
-**¿Por qué \`pos += s2.length()\`?** Para buscar después del texto insertado y evitar bucles infinitos.
+**¿Por qué `pos += s2.length()`?** Para buscar después del texto insertado y evitar bucles infinitos.
 
 ### ex05-ex06: Harl - Punteros a Miembro y Switch
 
 **Punteros a funciones miembro**:
-\`\`\`cpp
+```cpp
 void (Harl::*functions[4])() = {
     &Harl::debug,
     &Harl::info,
@@ -313,10 +313,10 @@ void (Harl::*functions[4])() = {
 
 // Llamada
 (this->*functions[i])();
-\`\`\`
+```
 
 **Switch con fall-through** (ex06):
-\`\`\`cpp
+```cpp
 switch (levelIndex)
 {
     case 0:  // DEBUG
@@ -332,11 +332,12 @@ switch (levelIndex)
         error();
         break;
     default:
-        std::cout << "[ Probably complaining... ]\\n";
+        std::cout << "[ Probably complaining... ]\
+";
 }
-\`\`\`
+```
 
-**Fall-through**: Pasa al siguiente \`case\` sin \`break\`. Comentarios \`/* fall through */\` son necesarios para el compilador.
+**Fall-through**: Pasa al siguiente `case` sin `break`. Comentarios `/* fall through */` son necesarios para el compilador.
 
 ---
 
@@ -344,7 +345,7 @@ switch (levelIndex)
 
 ### 1. Memoria Dinámica
 
-\`\`\`cpp
+```cpp
 // Objeto único
 Type* ptr = new Type;
 delete ptr;
@@ -352,48 +353,48 @@ delete ptr;
 // Array
 Type* arr = new Type[n];
 delete[] arr;  // ¡[] OBLIGATORIO!
-\`\`\`
+```
 
 **Stack vs Heap**:
 - **Stack**: Automático, rápido, destrucción al salir del scope
-- **Heap**: Manual (\`new\`/\`delete\`), persiste hasta \`delete\`, tamaño flexible
+- **Heap**: Manual (`new`/`delete`), persiste hasta `delete`, tamaño flexible
 
 ### 2. Referencias
 
-\`\`\`cpp
+```cpp
 int& ref = x;  // DEBE inicializarse
 ref = 10;      // Modifica x
-\`\`\`
+```
 
 **Cuándo usar**:
-- Parámetros (evitar copias): \`void func(std::string& str)\`
+- Parámetros (evitar copias): `void func(std::string& str)`
 - Objeto siempre existe
 - No necesitas NULL ni reasignar
 
 ### 3. Archivos
 
-\`\`\`cpp
+```cpp
 std::ifstream infile("file.txt");
 std::ofstream outfile("out.txt");
 
 // Streams SIEMPRE por referencia
 void process(std::ifstream& file);
-\`\`\`
+```
 
-### 4. Métodos de \`std::string\`
+### 4. Métodos de `std::string`
 
-\`\`\`cpp
+```cpp
 str.find(substr);           // Busca, devuelve pos o npos
 str.erase(pos, len);        // Borra len caracteres desde pos
 str.insert(pos, str2);      // Inserta en pos
 str.length();               // Tamaño
 str.empty();                // true si vacío
 str.c_str();                // Convierte a char*
-\`\`\`
+```
 
 ### 5. Switch Statement
 
-\`\`\`cpp
+```cpp
 switch (intVariable)  // Solo int, char, enum
 {
     case 0:
@@ -405,19 +406,19 @@ switch (intVariable)  // Solo int, char, enum
     default:
         // Si ningún case coincide
 }
-\`\`\`
+```
 
 ### 6. Initialization Lists
 
-\`\`\`cpp
+```cpp
 class MyClass {
     int& ref;  // Referencias deben ir aquí
 public:
     MyClass(int& r) : ref(r) {}  // Initialization list
 };
-\`\`\`
+```
 
-**Obligatorias para**: referencias, \`const\`, clases sin constructor por defecto.
+**Obligatorias para**: referencias, `const`, clases sin constructor por defecto.
 
 ---
 
@@ -425,12 +426,12 @@ public:
 
 | Ejercicio | Concepto |
 |-----------|----------|
-| ex00-01 | \`new\`/\`delete\`, \`new[]\`/\`delete[]\` |
+| ex00-01 | `new`/`delete`, `new[]`/`delete[]` |
 | ex02 | Punteros vs referencias |
 | ex03 | Cuándo usar cada uno, initialization lists |
-| ex04 | Archivos, \`find()\`, \`npos\` |
+| ex04 | Archivos, `find()`, `npos` |
 | ex05 | Punteros a funciones miembro |
-| ex06 | \`switch\`, fall-through |
+| ex06 | `switch`, fall-through |
 
 ---
 
