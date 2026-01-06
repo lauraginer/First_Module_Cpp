@@ -1,25 +1,32 @@
-# 📚 CPP Module 00 - Introduction to C++
+# 📚 C++ Modules - 42 School
 
-## 📋 Tabla de Contenidos
-- [Descripción General](#descripción-general)
+## 📋 Tabla de Contenidos General
+
+### [CPP Module 00 - Introduction to C++](#cpp-module-00)
+- [Descripción](#descripción-general-cpp00)
 - [Reglas Generales](#reglas-generales)
-- [Ejercicios](#ejercicios)
-  - [ex00: Megaphone](#ex00-megaphone)
-  - [ex01: PhoneBook](#ex01-phonebook)
-- [Conceptos Clave de C++](#conceptos-clave-de-c)
-- [Compilación y Ejecución](#compilación-y-ejecución)
+- [Ejercicios](#ejercicios-cpp00)
+- [Conceptos Clave](#conceptos-clave-cpp00)
+
+### [CPP Module 01 - Memory & References](#cpp-module-01)
+- [Descripción](#descripción-general-cpp01)
+- [Ejercicios](#ejercicios-cpp01)
+- [Conceptos Clave](#conceptos-clave-cpp01)
+
+---
+---
+
+# CPP Module 00
+
+<a name="cpp-module-00"></a>
 
 ---
 
-## 🎯 Descripción General
+## 🎯 Descripción General {#descripción-general-cpp00}
 
-El **Módulo CPP_00** es una introducción a la programación en C++. Explora conceptos fundamentales como:
-- Sintaxis básica de C++ (I/O streams, variables, funciones)
-- Programación Orientada a Objetos (POO)
-- Clases y encapsulación
-- Gestión de memoria estática
+**Introducción a C++ y POO**. Conceptos: I/O streams, clases, encapsulación, memoria estática.
 
-Este módulo utiliza el estándar **C++98** para comprender las bases del lenguaje antes de usar características modernas.
+**Estándar**: C++98
 
 ---
 
@@ -59,40 +66,28 @@ c++ -Wall -Wextra -Werror -std=c++98 archivo.cpp -o ejecutable
 
 ---
 
-## 🚀 Ejercicios
+## 🚀 Ejercicios {#ejercicios-cpp00}
 
 ### ex00: Megaphone
 
-**Descripción**: Programa que convierte argumentos de línea de comandos a mayúsculas.
+Convierte argumentos a mayúsculas.
 
-**Archivos**:
-- `megaphone.cpp`
-- `Makefile`
-
-**Uso**:
 ```bash
-./megaphone "shhhhh... I think the students are asleep..."
-# Output: SHHHHH... I THINK THE STUDENTS ARE ASLEEP...
-
-./megaphone Damnit " ! " "Sorry students, I thought this thing was off."
-# Output: DAMNIT ! SORRY STUDENTS, I THOUGHT THIS THING WAS OFF.
-
-./megaphone
-# Output: * LOUD AND UNBEARABLE FEEDBACK NOISE *
+./megaphone "hello world"
+# Output: HELLO WORLD
 ```
 
-**Conceptos aplicados**:
-- Uso de `std::cout` y `std::endl`
-- Manejo de argumentos (`argc`, `argv`)
-- Función `toupper()` de `<cctype>`
+**Conceptos**: `std::cout`, `argc/argv`, `toupper()`
 
 ---
 
 ### ex01: PhoneBook
 
-**Descripción**: Agenda telefónica simple que almacena hasta 8 contactos con funcionalidad de búsqueda.
+Agenda telefónica con máximo 8 contactos.
 
-**Archivos**:
+**Comandos**: `ADD`, `SEARCH`, `EXIT`
+
+**Estructura**:
 ```
 ex01/
 ├── main.cpp
@@ -103,252 +98,342 @@ ex01/
 └── Makefile
 ```
 
-**Comandos**:
-- `ADD`: Añadir un nuevo contacto (sobrescribe el más antiguo si hay 8)
-- `SEARCH`: Muestra tabla de contactos y permite ver detalles por índice
-- `EXIT`: Cierra el programa
+**Comandos**: `ADD`, `SEARCH`, `EXIT`
 
-**Uso**:
-```bash
-./phonebook
-Please, enter one option: ADD, SEARCH or EXIT
-> ADD
-Enter a first name:
-> Laura
-Enter a last name:
-> Giner
-...
-
-> SEARCH
-|     Index|First Name| Last Name|  Nickname|
-|----------|----------|----------|----------|
-|         0|     Laura|     Giner|       lau|
-|         1|     Pablo|  Gonzalez|   pablito|
-Enter an index to see all the information: 0
-
-First name: Laura
-Last name: Giner
-Nickname: lau
-Phone number: 123456789
-Dark secret: Loves coding
-```
-
-**Estructura de Clases**:
-
-#### Clase `Contact`
-Encapsula la información de un contacto individual.
+**Clases**:
+- `Contact`: Almacena información de un contacto (getters/setters)
+- `PhoneBook`: Gestiona array de 8 contactos
 
 ```cpp
 class Contact {
 private:
-    std::string firstName;
-    std::string lastName;
-    std::string nickname;
-    std::string phoneNumber;
-    std::string darkestSecret;
-    int id;  // Identificador único
-
+    std::string firstName, lastName, nickname;
+    std::string phoneNumber, darkestSecret;
 public:
-    // Getters
     std::string getFirstName();
-    int getId();
-    
-    // Setters
     void setFirstName(std::string name);
-    void setId(int contactId);
 };
-```
 
-#### Clase `PhoneBook`
-Gestiona el array de contactos y la lógica de la agenda.
-
-```cpp
 class PhoneBook {
 private:
-    Contact contacts[8];   // Array fijo (memoria estática)
-    int count;             // Contactos actuales (máx 8)
-    int index;             // Siguiente posición a sobrescribir
-    int totalContacts;     // Contador total de contactos añadidos
-
+    Contact contacts[8];  // Array fijo
+    int count, index;     // Control de contactos
 public:
     PhoneBook();  // Constructor
     void addContact();
-    int createPhonebook();
-    int enterIndex(std::string input);
 };
 ```
 
-**Variables de control**:
-- `count`: Número de contactos actuales (máximo 8, nunca decrece hasta llenarse)
-- `index`: Posición circular para sobrescribir (`index = (index + 1) % 8`)
-- `totalContacts`: ID único que incrementa indefinidamente
+**Lógica circular**: `index = (index + 1) % 8` para sobrescribir el más antiguo.
 
 ---
 
-## 💡 Conceptos Clave de C++
+## 💡 Conceptos Clave {#conceptos-clave-cpp00}
 
-### 1. Constructores
-Método especial que **inicializa los atributos** de una clase cuando se crea un objeto.
+### 1. Clases y Encapsulación
 
 ```cpp
-// En PhoneBook.hpp
+class MyClass {
+private:
+    int value;  // Atributo privado
+public:
+    int getValue() { return value; }  // Getter
+    void setValue(int v) { value = v; }  // Setter
+};
+```
+
+### 2. Constructores
+
+```cpp
 class PhoneBook {
 public:
-    PhoneBook();  // Declaración del constructor
+    PhoneBook();  // Constructor
 };
 
-// En PhoneBook.cpp
-PhoneBook::PhoneBook() : count(0), index(0), totalContacts(0)
-{
-    // Initialization list (C++98 compatible)
-}
+// Initialization list (C++98)
+PhoneBook::PhoneBook() : count(0), index(0) {}
 ```
 
-**⚠️ Importante**: En C++98 **NO** se puede inicializar en la declaración:
-```cpp
-// ❌ PROHIBIDO en C++98
-class PhoneBook {
-    int count = 0;  // Error!
-};
+**⚠️ C++98**: NO se puede `int count = 0;` en la clase. Usar initialization list.
 
-// ✅ CORRECTO - Usar initialization list en el constructor
-PhoneBook::PhoneBook() : count(0) {}
+### 3. Getters y Setters
+
+- **Getter**: Devuelve valor de atributo privado
+- **Setter**: Modifica valor de atributo privado
+- **Ventaja**: Control y validación de acceso
+
+### 4. Paso por Referencia
+
+```cpp
+void func(std::string& str);  // No copia, usa el original
+```
+
+- Evita copias costosas
+- Cambios afectan al original
+- Usar `&` para objetos grandes
+
+### 5. `std::string`
+
+```cpp
+std::string str = "Hello";
+str.length();     // Tamaño
+str.empty();      // true si vacío
+str.substr(0, 3); // "Hel"
+```
+
+### 6. Memoria Estática
+
+```cpp
+Contact contacts[8];  // ✓ Array fijo (permitido)
+int* ptr = new int;   // ❌ Dinámica (prohibida en CPP_00)
 ```
 
 ---
 
-### 2. Getters y Setters (Encapsulación)
+## ✨ Puntos Clave
 
-**Getters**: Obtienen el valor de un atributo privado.
-```cpp
-std::string Contact::getFirstName()
-{
-    return firstName;
-}
-```
-
-**Setters**: Modifican el valor de un atributo privado.
-```cpp
-void Contact::setFirstName(std::string name)
-{
-    firstName = name;
-}
-```
-
-**Ventajas**:
-- Control sobre acceso a datos
-- Validación de valores (ej: verificar que el nombre no esté vacío)
-- Encapsulación: ocultación de detalles internos
-
----
-
-### 3. Paso por Referencia vs Paso por Valor
-
-#### Paso por Valor (crea una copia)
-```cpp
-void saveContact(Contact contact);  // Copia el objeto completo
-```
-- ❌ **Ineficiente**: Copia toda la información del contacto
-- ❌ **Cambios no afectan** al original
-
-#### Paso por Referencia (usa el original)
-```cpp
-void checkEmpty(std::string &input, std::string message);
-```
-- ✅ **Eficiente**: No copia, usa el objeto original
-- ✅ **Cambios SÍ afectan** al original
-- ✅ **Ahorra memoria** especialmente con objetos grandes
-
-**Cuándo usar cada uno**:
-- **Referencia (`&`)**: Cuando quieres modificar el parámetro o evitar copias costosas
-- **Valor**: Cuando necesitas una copia independiente o datos simples (int, char)
-
----
-
-### 4. `std::string` - Primera Clase de C++
-
-En C++, `std::string` es una **clase** (como `Contact` o `PhoneBook`).
-
-```cpp
-std::string field = "Laura";
-
-// Métodos de la clase string
-field.length();      // Devuelve 5
-field.empty();       // Devuelve false
-field.substr(0, 3);  // Devuelve "Lau"
-field.c_str();       // Convierte a C-string (char*)
-```
-
-**Diferencia con C**:
-- C: `char str[]` + funciones (`strlen()`, `strcpy()`)
-- C++: `std::string` + métodos (`str.length()`, `str.substr()`)
-
----
-
-### 5. Memoria Estática vs Dinámica
-
-#### Memoria Estática (Permitida)
-```cpp
-Contact contacts[8];     // Array fijo en tiempo de compilación
-std::string input;       // Variable local (stack)
-int count;               // Variable miembro
-```
-
-#### Memoria Dinámica (Prohibida en este ejercicio)
-```cpp
-Contact* contacts = new Contact[8];  // ❌ PROHIBIDO
-delete[] contacts;
-
-int* ptr = (int*)malloc(sizeof(int));  // ❌ PROHIBIDO (función de C)
-free(ptr);
-```
-
-**Razón**: Este módulo se centra en **RAII** (Resource Acquisition Is Initialization) - dejar que el compilador gestione la memoria automáticamente.
-
----
-
-## 🛠️ Compilación y Ejecución
-
-### ex00: Megaphone
-```bash
-cd ex00
-make
-./megaphone "Hello World"
-make clean  # Elimina .o
-make fclean # Elimina .o y ejecutable
-```
-
-### ex01: PhoneBook
-```bash
-cd ex01
-make
-./phonebook
-make re  # Recompila todo desde cero
-```
-
----
-
-## 📚 Recursos Útiles
-
-- [CPlusPlus Reference](https://cplusplus.com/reference/)
-- [Learn C++](https://www.learncpp.com/)
-- [C++98 Standard](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf)
-
----
-
-## ✨ Puntos Clave a Recordar
-
-1. **C++98**: No usar características modernas (auto, nullptr, range-based for)
-2. **Encapsulación**: Atributos `private`, acceso mediante getters/setters
-3. **Constructors**: Usar initialization list para inicializar miembros
-4. **Referencias**: Preferir `&` para evitar copias innecesarias
-5. **Memoria**: Solo estática (arrays fijos, variables locales)
-6. **Include guards**: Obligatorios en todos los `.hpp`
-7. **Namespaces**: Escribir `std::cout`, nunca `using namespace std`
-8. **Validación**: Siempre verificar entrada del usuario
+- **C++98**: No `auto`, `nullptr`, range-based for
+- **Encapsulación**: Atributos `private`, getters/setters
+- **Constructores**: Usar initialization list
+- **Referencias**: `&` para evitar copias
+- **Include guards**: Obligatorios en `.hpp`
+- **Namespaces**: `std::cout`, nunca `using namespace std`
 
 ---
 
 **Autor**: Laura Giner  
-**Fecha**: Diciembre 2025  
-**Proyecto**: 42 School - CPP Module 00
+**Fecha**: Diciembre 2025
+
+---
+---
+
+# CPP Module 01
+
+<a name="cpp-module-01"></a>
+
+## 🎯 Descripción General {#descripción-general-cpp01}
+
+El **Módulo CPP_01** profundiza en la gestión de memoria y referencias en C++. Los temas principales son:
+- Asignación de memoria dinámica con `new` y `delete`
+- Diferencias entre punteros y referencias
+- Punteros a funciones miembro
+- Manipulación de archivos y strings
+- `switch` statements
+
+**Estándar**: C++98
+
+---
+
+## 🚀 Ejercicios {#ejercicios-cpp01}
+
+### ex00-ex01: Zombies (new/delete y arrays)
+
+**Conceptos**: Memoria dinámica en stack vs heap
+
+\`\`\`cpp
+// Stack - destrucción automática
+Zombie z("Stack");
+
+// Heap - destrucción manual
+Zombie* z = new Zombie("Heap");
+delete z;
+
+// Arrays
+Zombie* horde = new Zombie[10];
+delete[] horde;  // ¡[] obligatorio!
+\`\`\`
+
+### ex02: Punteros vs Referencias
+
+\`\`\`cpp
+std::string str = "HI THIS IS BRAIN";
+std::string* stringPTR = &str;  // Puntero
+std::string& stringREF = str;   // Referencia
+
+// Acceso
+*stringPTR;  // Dereferencia con *
+stringREF;   // Acceso directo
+\`\`\`
+
+| Puntero | Referencia |
+|---------|------------|
+| Puede ser NULL | DEBE inicializarse |
+| Se puede reasignar | NO cambia destino |
+| \`*ptr\` para acceder | Acceso directo |
+
+### ex03: Weapon - Referencias vs Punteros
+
+**HumanA** - Referencia (siempre tiene arma):
+\`\`\`cpp
+class HumanA {
+    Weapon& weapon;  // Inicializada en constructor
+public:
+    HumanA(std::string n, Weapon& w) : weapon(w) {}
+};
+\`\`\`
+
+**HumanB** - Puntero (puede no tener arma):
+\`\`\`cpp
+class HumanB {
+    Weapon* weapon;  // Puede ser NULL
+public:
+    HumanB(std::string n) : weapon(NULL) {}
+    void setWeapon(Weapon& w) { weapon = &w; }
+};
+\`\`\`
+
+### ex04: Sed is for losers
+
+Reemplazar strings en archivos sin usar \`std::string::replace\`.
+
+\`\`\`cpp
+// Buscar todas las ocurrencias
+while ((pos = line.find(s1, pos)) != std::string::npos)
+{
+    line.erase(pos, s1.length());
+    line.insert(pos, s2);
+    pos += s2.length();  // Evita bucle infinito
+}
+\`\`\`
+
+**\`std::string::npos\`**: Constante que significa "no encontrado"
+
+**¿Por qué \`pos += s2.length()\`?** Para buscar después del texto insertado y evitar bucles infinitos.
+
+### ex05-ex06: Harl - Punteros a Miembro y Switch
+
+**Punteros a funciones miembro**:
+\`\`\`cpp
+void (Harl::*functions[4])() = {
+    &Harl::debug,
+    &Harl::info,
+    &Harl::warning,
+    &Harl::error
+};
+
+// Llamada
+(this->*functions[i])();
+\`\`\`
+
+**Switch con fall-through** (ex06):
+\`\`\`cpp
+switch (levelIndex)
+{
+    case 0:  // DEBUG
+        debug();
+        /* fall through */
+    case 1:  // INFO
+        info();
+        /* fall through */
+    case 2:  // WARNING
+        warning();
+        /* fall through */
+    case 3:  // ERROR
+        error();
+        break;
+    default:
+        std::cout << "[ Probably complaining... ]\\n";
+}
+\`\`\`
+
+**Fall-through**: Pasa al siguiente \`case\` sin \`break\`. Comentarios \`/* fall through */\` son necesarios para el compilador.
+
+---
+
+## 💡 Conceptos Clave {#conceptos-clave-cpp01}
+
+### 1. Memoria Dinámica
+
+\`\`\`cpp
+// Objeto único
+Type* ptr = new Type;
+delete ptr;
+
+// Array
+Type* arr = new Type[n];
+delete[] arr;  // ¡[] OBLIGATORIO!
+\`\`\`
+
+**Stack vs Heap**:
+- **Stack**: Automático, rápido, destrucción al salir del scope
+- **Heap**: Manual (\`new\`/\`delete\`), persiste hasta \`delete\`, tamaño flexible
+
+### 2. Referencias
+
+\`\`\`cpp
+int& ref = x;  // DEBE inicializarse
+ref = 10;      // Modifica x
+\`\`\`
+
+**Cuándo usar**:
+- Parámetros (evitar copias): \`void func(std::string& str)\`
+- Objeto siempre existe
+- No necesitas NULL ni reasignar
+
+### 3. Archivos
+
+\`\`\`cpp
+std::ifstream infile("file.txt");
+std::ofstream outfile("out.txt");
+
+// Streams SIEMPRE por referencia
+void process(std::ifstream& file);
+\`\`\`
+
+### 4. Métodos de \`std::string\`
+
+\`\`\`cpp
+str.find(substr);           // Busca, devuelve pos o npos
+str.erase(pos, len);        // Borra len caracteres desde pos
+str.insert(pos, str2);      // Inserta en pos
+str.length();               // Tamaño
+str.empty();                // true si vacío
+str.c_str();                // Convierte a char*
+\`\`\`
+
+### 5. Switch Statement
+
+\`\`\`cpp
+switch (intVariable)  // Solo int, char, enum
+{
+    case 0:
+        // código
+        break;  // Sale del switch
+    case 1:
+        // código
+        // Sin break - continúa (fall-through)
+    default:
+        // Si ningún case coincide
+}
+\`\`\`
+
+### 6. Initialization Lists
+
+\`\`\`cpp
+class MyClass {
+    int& ref;  // Referencias deben ir aquí
+public:
+    MyClass(int& r) : ref(r) {}  // Initialization list
+};
+\`\`\`
+
+**Obligatorias para**: referencias, \`const\`, clases sin constructor por defecto.
+
+---
+
+## ✨ Resumen
+
+| Ejercicio | Concepto |
+|-----------|----------|
+| ex00-01 | \`new\`/\`delete\`, \`new[]\`/\`delete[]\` |
+| ex02 | Punteros vs referencias |
+| ex03 | Cuándo usar cada uno, initialization lists |
+| ex04 | Archivos, \`find()\`, \`npos\` |
+| ex05 | Punteros a funciones miembro |
+| ex06 | \`switch\`, fall-through |
+
+---
+
+**Autor**: Laura Giner  
+**Fecha**: Enero 2026  
+**Proyecto**: 42 School - CPP Module 01
