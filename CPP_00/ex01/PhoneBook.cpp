@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 13:32:49 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 22:50:05 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/08 19:56:09 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void PhoneBook::checkEmpty(std::string &input, std::string message)
 	{
 		std::cout << message;
 		std::getline(std::cin, input);
+		if(std::cin.eof())
+		{
+			std::cout << std::endl;
+			std::cout << "Detected EOF. Can't be!\n";
+			return ;
+		}
 		if(input.empty())
 			std::cout << "Can't be empty!\n";
 		else

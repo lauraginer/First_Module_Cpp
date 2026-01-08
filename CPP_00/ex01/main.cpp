@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:14:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 22:19:34 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/08 19:55:23 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
+#include <string>
+#include <iostream>
 
 int main()
 {
@@ -22,6 +24,12 @@ int main()
 	{
 		std::cout << "Please, enter one option: ADD, SEARCH or EXIT\n";
 		std::getline(std::cin, input);
+		if(std::cin.eof())
+		{
+			std::cout << std::endl;
+			std::cout << "Detected EOF. Can't be!\n";
+			return(1);
+		}
 		if(input == "ADD")
 			phonebook.addContact();
 		else if(input == "SEARCH")
@@ -32,6 +40,12 @@ int main()
 				{
 					std::cout << "Enter an index to see all the information: ";
 					std::getline(std::cin, input);
+					if(std::cin.eof())
+					{
+						std::cout << std::endl;
+						std::cout << "Detected EOF. Can't be!\n";
+						return(1);
+					}
 					if(input.empty())
 					{
 						std::cout << "Can't be empty!\n";
@@ -43,7 +57,7 @@ int main()
 			}
 		}
 		else if(input == "EXIT")
-			exit(0);
+			return(0);
 	}
 	return(0);
 }
