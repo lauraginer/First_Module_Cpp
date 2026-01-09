@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:14:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/08 19:55:23 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:03:32 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "PhoneBook.hpp"
 #include <string>
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {
@@ -27,8 +28,8 @@ int main()
 		if(std::cin.eof())
 		{
 			std::cout << std::endl;
-			std::cout << "Detected EOF. Can't be!\n";
-			return(1);
+			std::cout << "Detected EOF. Please compile again!\n";
+			exit(1);
 		}
 		if(input == "ADD")
 			phonebook.addContact();
@@ -43,7 +44,7 @@ int main()
 					if(std::cin.eof())
 					{
 						std::cout << std::endl;
-						std::cout << "Detected EOF. Can't be!\n";
+						std::cout << "Detected EOF. Please compile again!\n";
 						return(1);
 					}
 					if(input.empty())
@@ -57,7 +58,7 @@ int main()
 			}
 		}
 		else if(input == "EXIT")
-			return(0);
+			exit(1);
 	}
 	return(0);
 }

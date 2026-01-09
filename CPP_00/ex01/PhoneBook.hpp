@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 20:32:36 by lginer-m          #+#    #+#             */
-/*   Updated: 2025/12/26 22:50:00 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/09 19:43:53 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 #define PHONEBOOK_HPP
 
 #include <string>
-#include "Contact.hpp"
 
 class PhoneBook {
 private:
     Contact contacts[8];   // array fijo
     int count;             // número de contactos actuales
     int index;            // para saber a quién sobrescribir
-    int totalContacts;    // contador real de contactos añadidos
 
 public:
 	PhoneBook();  // Constructor(inicializa las variables)

@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 13:32:49 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/08 19:56:09 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:47:59 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <cstdlib>
 
 // Constructor
-PhoneBook::PhoneBook() : count(0), index(0), totalContacts(0)
+PhoneBook::PhoneBook() : count(0), index(0)
 {
 }
 
@@ -45,8 +45,9 @@ void PhoneBook::addContact()
 	}
 	checkEmpty(input, "Enter a darkest secret!:\n");
 	contact.setDarkestSecret(input);
-	contact.setId(totalContacts);
+	contact.setId(index);
 	saveContact(contact);
+	
 }
 
 void PhoneBook::checkEmpty(std::string &input, std::string message)
@@ -58,8 +59,8 @@ void PhoneBook::checkEmpty(std::string &input, std::string message)
 		if(std::cin.eof())
 		{
 			std::cout << std::endl;
-			std::cout << "Detected EOF. Can't be!\n";
-			return ;
+			std::cout << "Detected EOF. Please compile again!\n";
+			exit(1);
 		}
 		if(input.empty())
 			std::cout << "Can't be empty!\n";
@@ -94,7 +95,6 @@ void PhoneBook::saveContact(Contact contact)
     index = (index + 1) % 8; //el resto siempre va a dar el mismo numero hasta llegar al 8
     if (count < 8)
         count++;
-    totalContacts++;  // sumamos al contador real
 }
 
 // Fuction SEARCH
@@ -143,7 +143,7 @@ int PhoneBook::enterIndex(std::string input)
 	{
 		if(contacts[i].getId() == idx)
 		{
-			std::cout << "\nFirst name: " << contacts[i].getFirstName() << std::endl;
+			std::cout << "\nFirst name: " << count << std::endl;
 			std::cout << "Last name: " << contacts[i].getLastName() << std::endl;
 			std::cout << "Nickname: " << contacts[i].getNickName() << std::endl;
 			std::cout << "Phone number: " << contacts[i].getPhoneNumber() << std::endl;
