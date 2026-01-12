@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:36:14 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/09 19:56:08 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/12 19:03:48 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 			j = 0;
 			while(argv[i][j])
 			{
-				result = toupper(argv[i][j]);
+				result = std::toupper(argv[i][j]);
 				std::cout << result;
 				j++;
 			}	
