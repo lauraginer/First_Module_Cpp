@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 13:32:49 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/09 15:47:59 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/12 18:04:45 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int PhoneBook::enterIndex(std::string input)
 	{
 		if(contacts[i].getId() == idx)
 		{
-			std::cout << "\nFirst name: " << count << std::endl;
+			std::cout << "\nFirst name: " << contacts[i].getFirstName() << std::endl;
 			std::cout << "Last name: " << contacts[i].getLastName() << std::endl;
 			std::cout << "Nickname: " << contacts[i].getNickName() << std::endl;
 			std::cout << "Phone number: " << contacts[i].getPhoneNumber() << std::endl;
