@@ -1,0 +1,37 @@
+-Constructor de copia:
+	El constructo de copia es una funcion especial que se llama cuando se crea un objeto copiando otro.
+	La forma en cuestion es la siguiente "ClassName(const ClassName& other){}" y SIEMPRE se debe de implementar el constructor de copia, 
+	aunque no lo uses conscientemente porque las reglas de 42 así lo miden, así, si necesitas crear un objeto copiando otro ya lo tienes definido.
+
+-Operador de asignación:
+	Es lo que se usa cuando un objeto ya existe y le asignas otro.. La forma en cuestion es 
+	"ClassName& operator=(const ClassName& other){};" y se utiliza para copiar en un objeto que ya existe.
+
+
+Diferencias en cuanto a su uso:
+
+Contact a;
+
+Contact b(a);   // constructor de copia
+Contact c = a;  // constructor de copia también
+
+Contact d;
+d = a;          // operador =
+
+
+-Forma Canónica Ortodoxa:
+
+class Example {
+public:
+    Example();                                // constructor por defecto
+    Example(const Example& other);            // constructor de copia
+    Example& operator=(const Example& other); // operador =
+    ~Example();                               // destructor
+};
+
+Basicamente la forma canónica ortodoxa quee se debe de seguir en adelante en todos los ejercicios concretamente
+consta de estas cuatro funciones obligatorias. Estas son públicas, a no ser que se especifique lo contrario en
+algun subject de algun ejercicio.
+
+
+IMPORTANTE: los números de punto fijo (fixed-point numbers).
