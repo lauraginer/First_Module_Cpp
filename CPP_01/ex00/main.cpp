@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:47:42 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/30 21:03:05 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/14 20:19:07 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int main()
 	
 	randomChump("Michael");
 	randomChump("Robert");
+	
 	//Zombie en HEAP (newZombie), guardamos el puntero y hacer delete manual
 	heapZombie = newZombie("Laura");
 	heapTwoZombie = newZombie("Marie");
@@ -27,7 +28,7 @@ int main()
 	heapZombie->announce();
 	heapTwoZombie->announce();
 	heapThreeZombie->announce();
-	delete heapZombie; //despues de delete, se llama al destructor automaticamente
+	delete heapZombie;
 	delete heapTwoZombie;
 	delete heapThreeZombie;
 	

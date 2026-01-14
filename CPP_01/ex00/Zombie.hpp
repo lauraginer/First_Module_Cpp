@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:32:40 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/28 21:39:40 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/14 20:31:02 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,15 @@
 
 class Zombie {
 private:
-	std::string		name;
+	std::string name;
 
 public:
-	Zombie(std::string name);  //constructor
-	~Zombie();  //destructor
+	Zombie(std::string name); //Constructor
+	~Zombie(); //Destructor
 	void announce(void);
 	
 };
 
-// Funciones globales (no son métodos de la clase)
 Zombie* newZombie(std::string name);
 void randomChump(std::string name);
 

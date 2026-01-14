@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 13:44:03 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/13 17:50:29 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:35:41 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,7 @@ const int Fixed::bits = 8;
 Fixed::Fixed() : value(0) {
 }
 
-
+Fixed(const Fixed& other)
+{
+	
+}

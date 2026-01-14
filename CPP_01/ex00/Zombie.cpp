@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Zombie.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:32:37 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/28 21:39:30 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/14 20:29:29 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,3 @@ Zombie::~Zombie()
 {
 	std::cout << name << std::endl;
 }
-
-//Los zombies deben ser destruidos cuando ya no se necesiten.
-//El destructor de la clase Zombie debe imprimir un mensaje con el nombre del zombie, únicamente con fines de depuración.
