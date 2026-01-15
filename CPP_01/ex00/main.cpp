@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 15:47:42 by lauragm           #+#    #+#             */
-/*   Updated: 2026/01/14 20:19:07 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:42:09 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int main()
 {
-	Zombie* heapZombie;
-	Zombie* heapTwoZombie;
-	Zombie* heapThreeZombie;
+	Zombie *heapZombie;
+	Zombie *heapTwoZombie;
+	Zombie *heapThreeZombie;
 	
 	randomChump("Michael");
 	randomChump("Robert");

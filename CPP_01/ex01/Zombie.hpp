@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 20:25:54 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/30 21:34:03 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/15 12:46:33 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ private:
 	std::string		name;
 
 public:
-	Zombie();  //constructor
-	~Zombie();  //destructor
+	Zombie();  //Constructor
+	~Zombie();  //Destructor
 	void announce(void);
 	void setName(std::string nick);
 };
 
-// Funciones globales (no son métodos de la clase)
 Zombie* zombieHorde( int N, std::string name);
-
 
 #endif
