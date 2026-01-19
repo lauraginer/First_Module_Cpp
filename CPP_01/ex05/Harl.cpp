@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Harl.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 21:27:11 by lauragm           #+#    #+#             */
-/*   Updated: 2026/01/06 16:38:03 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/16 19:14:06 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void Harl::complain(std::string level)
 	{
 		if(levels[i] == level)
 		{
-			(this->*functions[i])(); //llamanos a la funcion que le corresponde
+			(this->*functions[i])(); //Llamanos a la funcion que le corresponde
 			return;
 		}
 		i++;

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 22:29:42 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/31 14:36:06 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/19 16:52:51 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanB.hpp"
+#include "HumanA.hpp"
+#include "Weapon.hpp"
 
 int main()
 {
@@ -23,9 +25,11 @@ int main()
 	}
 	{
 		Weapon club = Weapon("crude spiked club");
+		HumanB jose("Jose");
 		HumanB jim("Jim");
 		jim.setWeapon(club);
 		jim.attack();
+		jose.attack();
 		club.setType("some other type of club");
 		jim.attack();
 	}

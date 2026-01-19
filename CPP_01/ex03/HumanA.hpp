@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 22:29:31 by lauragm           #+#    #+#             */
-/*   Updated: 2025/12/30 23:19:21 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/16 16:37:33 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HUMANA_HPP
 #define HUMANA_HPP
 
-#include "Weapon.hpp"
 #include <string>
+#include "Weapon.hpp"
 
 class HumanA{
 private:
@@ -22,7 +22,7 @@ private:
 	Weapon& weapon;
 	
 public:
-	HumanA(std::string name, Weapon& weapon); //constructor
+	HumanA(std::string name, Weapon& weapon); //Constructor, weapon es obligatorio por subject
 	void	attack();
 };
 

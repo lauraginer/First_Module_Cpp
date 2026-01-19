@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Harl.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 21:27:11 by lauragm           #+#    #+#             */
-/*   Updated: 2026/01/06 19:06:51 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/01/16 19:19:48 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void Harl::complain(std::string level)
 {
 	std::string levels[4] = { "DEBUG", "INFO", "WARNING", "ERROR" };
 	void (Harl::*functions[4])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
-	int index_levels = -1;  // inicializado en -1 para en caso de error
+	int index_levels = -1;  //Inicializado en -1 para en caso de error
 	int i = 0;
 	
 	while(i < 4)
@@ -50,7 +50,7 @@ void Harl::complain(std::string level)
 		}
 		i++;
 	}
-	switch(index_levels) //switch no acepta strings, pero si int entre otros
+	switch(index_levels) //Switch no acepta strings, pero si int entre otros
 	{
 		case 0:
 		{
