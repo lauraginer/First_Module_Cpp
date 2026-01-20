@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 13:44:03 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/20 12:43:30 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:36:07 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,13 @@ Fixed &Fixed::operator=(const Fixed &other)
 Fixed::~Fixed()
 {
 	std::cout << "Destructor called\n";
+}
+int Fixed::getRawBits( void ) const
+{
+	std::cout << "getRawBits member function called\n";
+	return(value);
+}
+void Fixed::setRawBits( int const raw )
+{
+		value = raw;
 }
