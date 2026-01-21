@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 13:29:32 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/20 16:33:54 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:12:39 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,3 @@ int main( void ) //Código proporcionado por el subject
 	std::cout << c.getRawBits() << std::endl;
 	return 0;
 }
-
-//El valor real de un numero de punto fijo: valor_real = valor_entero / (2^bits)

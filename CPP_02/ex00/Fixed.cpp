@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 13:44:03 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/20 16:36:07 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:18:27 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ Fixed::Fixed() : value(0) {
 
 Fixed::Fixed(const Fixed& other)
 {
-	value = other.value;
 	std::cout << "Copy constructor called\n";
+	value = other.value;
+
 }
+
 Fixed &Fixed::operator=(const Fixed &other)
 {
 	std::cout << "Copy assignment operator called \n";
