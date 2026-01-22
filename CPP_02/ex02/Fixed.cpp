@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:48:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/21 19:49:00 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/22 15:53:24 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,69 @@ int Fixed::toInt( void ) const
 	real_value = value >> bits;
 	return(real_value);
 }
-std::ostream& operator<<(std::ostream& out, Fixed const& obj)
+std::ostream &operator<<(std::ostream& out, Fixed const& obj)
 {
 	out << obj.toFloat();
     return(out);
 }
-//Esta funcion necesita que inserte una representación en coma flotante del número de punto fijo en el flujo de salida que se pase como parámetro.
+
+bool Fixed::operator<(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value < obj.value;
+	return(flag);
+}
+bool Fixed::operator>(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value > obj.value;
+	return(flag);
+}
+bool Fixed::operator<=(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value <= obj.value;
+	return(flag);
+}
+bool Fixed::operator>=(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value >= obj.value;
+	return(flag);
+}
+bool Fixed::operator==(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value == obj.value;
+	return(flag);
+}
+bool Fixed::operator!=(Fixed const& obj) const
+{
+	bool flag;
+	flag = this->value != obj.value;
+	return(flag);
+}
+Fixed Fixed::operator+(Fixed const& obj) const
+{
+	Fixed result;
+	result.value = this->value + obj.value;
+	return(result);
+}
+Fixed Fixed::operator-(Fixed const& obj) const
+{
+	Fixed result;
+	result.value = this->value - obj.value;
+	return(result);
+}
+Fixed Fixed::operator*(Fixed const& obj) const
+{
+	Fixed result;
+	result.value = this->value * obj.value;
+	return(result);
+}
+Fixed Fixed::operator/(Fixed const& obj) const
+{
+	Fixed result;
+	result.value = this->value / obj.value;
+	return(result);
+}

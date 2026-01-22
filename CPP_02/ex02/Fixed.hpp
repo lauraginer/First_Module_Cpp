@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:49:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/21 19:49:08 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/22 16:00:32 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,30 @@ public:
 
 	float toFloat( void ) const;			//Convierte el valor en punto fijo a un valor de tipo float
 	int toInt( void ) const;				//Convierte el valor en punto fijo a un valor de tipo int
+
+	bool operator<(Fixed const& obj) const; //Funcion de sobrecarga del operador <
+	bool operator>(Fixed const& obj) const; //Funcion de sobrecarga del operador >
+	bool operator<=(Fixed const& obj) const; //Funcion de sobrecarga del operador <=
+	bool operator>=(Fixed const& obj) const; //Funcion de sobrecarga del operador >=
+	bool operator==(Fixed const& obj) const; //Funcion de sobrecarga del operador ==
+	bool operator!=(Fixed const& obj) const; //Funcion de sobrecarga del operador !=
+
+	Fixed operator+(Fixed const& obj) const;  //Funcion del operador aritmetico de +
+	Fixed operator-(Fixed const& obj) const;  //Funcion del operador aritmetico de -
+	Fixed operator*(Fixed const& obj) const;  //Funcion del operador aritmetico de *
+	Fixed operator/(Fixed const& obj) const;  //Funcion del operador aritmetico de /
+
+	Fixed &operator++();    //Funcion del operador aritmetico de ++ preincremento
+	Fixed operator++(int);  //Funcion del operador aritmetico de ++ postincremento
+	Fixed &operator--();    //Funcion del operador aritmetico de -- predecremento
+	Fixed operator--(int);  //Funcion del operador aritmetico de -- postdecremento
+	
+	static Fixed& min(Fixed& a, Fixed& b);
+	static const Fixed& min(const Fixed& a, const Fixed& b);
+	static const Fixed& min(const Fixed& a, const Fixed& b);
+	static Fixed& max(Fixed& a, Fixed& b);
+	static const Fixed& max(const Fixed& a, const Fixed& b);	
 };
 
-std::ostream& operator<<(std::ostream& out, Fixed const& obj); //Funcion de sobrecarga del operador <<
+std::ostream &operator<<(std::ostream& out, Fixed const& obj); //Funcion de sobrecarga del operador <<
 #endif
