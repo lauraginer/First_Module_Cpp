@@ -1,0 +1,116 @@
+QUÉ ES UN NÚMERO DE PUNTO FIJO?
+---------------------------------
+
+Es una forma de representar números decimales usando solo enteros.
+La idea: dividimos los bits del entero en dos partes, para guardar memoria
+especifica para la parte fraccionaria (este tipo de dato guarda la misma cantidad de memoria
+para la parte fraccionaria, en contraposicion a los floats):
+  - Bits para la parte ENTERA
+  - Bits para la parte DECIMAL (fraccionaria)
+
+En nuestro caso: usamos 8 bits para decimales.
+  - Precisión: 1/256 = 0.00390625
+  - Cada número se representa como: valor_real = valor_entero / 256
+
+
+VENTAJAS vs FLOAT:
+-----------------
+  ✓ Más rápido (solo usa operaciones con enteros)
+  ✓ Más predecible (sin errores de redondeo raros)
+  ✓ Útil en: gráficos, audio, sistemas embebidos
+
+
+================================================================================
+                            CONVERSIONES
+================================================================================
+
+1️⃣ DE ENTERO A PUNTO FIJO:
+---------------------------
+   value = número << 8     // Multiplicar por 256
+   
+   Ejemplo: 42 → 42 << 8 = 10752
+
+
+2️⃣ DE FLOAT A PUNTO FIJO:
+--------------------------
+   value = roundf(número × 256)
+   
+   Ejemplo:
+      number = 42.42
+      42.42 × 256 = 10859.52
+      roundf(10859.52) = 10860
+   
+   Limitación de precisión:
+      - 42.42 / 0.00390625 = 10859.52 (no es entero)
+      - Se redondea a 10860
+      - 10860 × 0.00390625 = 42.421875  ← Valor real almacenado
+
+
+3️⃣ DE PUNTO FIJO A ENTERO:
+---------------------------
+   return value >> 8       // Dividir por 256, elimina decimales
+   
+   Ejemplo: 10860 >> 8 = 42
+
+
+4️⃣ DE PUNTO FIJO A FLOAT:
+--------------------------
+   return (float)value / 256
+   
+   Ejemplo: 10860 / 256 = 42.421875
+
+
+================================================================================
+                      SOBRECARGA DEL OPERADOR <<
+================================================================================
+
+¿QUÉ ES std::ostream?
+---------------------
+Es una clase que representa un flujo de salida (donde escribir).
+
+Ejemplos:
+  - std::cout    → Consola
+  - std::cerr    → Errores
+  - std::ofstream → Archivo
+
+Todos funcionan igual, solo cambia dónde escriben.
+
+
+FIRMA DE LA FUNCIÓN:
+--------------------
+std::ostream& operator<<(std::ostream& out, const Fixed& obj);
+
+Parámetros:
+  - std::ostream& out: flujo de salida (normalmente std::cout)
+    → Por referencia para escribir directamente en el stream original
+  
+  - const Fixed& obj: objeto a imprimir
+    → Por referencia para eficiencia
+    → const porque no modificamos el objeto al imprimirlo
+
+
+¿POR QUÉ DEVUELVE std::ostream&?
+--------------------------------
+Para permitir encadenar múltiples << en la misma línea:
+
+   std::cout << a << b << std::endl;
+             └──┬──┘
+          Retorna std::cout&, permitiendo continuar
+
+Sin el return out, esto NO sería posible.
+
+
+CÓMO FUNCIONA EL ENCADENAMIENTO:
+---------------------------------
+   std::cout << a << b << std::endl;
+   
+   Se ejecuta así:
+     1. operator<<(std::cout, a)    → Imprime a, retorna std::cout&
+     2. operator<<(std::cout, b)    → Imprime b, retorna std::cout&
+     3. operator<<(std::cout, endl) → Salto de línea
+
+
+IMPORTANTE:
+-----------
+Para tipos personalizados (como Fixed), DEBES sobrecargar operator<<.
+Sin sobrecarga → Error de compilación al intentar std::cout << objeto;

@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:48:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/23 18:56:20 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:03:07 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,13 @@ Fixed& Fixed::operator++()
 }
 Fixed Fixed::operator++(int)
 {
-	Fixed current_value(*this); //Copia todo el objeto
+	Fixed current_value(*this); //Constructor de copia
 	this->value++;
 	return(current_value);
 }
 Fixed Fixed::operator--(int)
 {
-	Fixed current_value(*this); //Copia todo el objeto
+	Fixed current_value(*this); //Constructor de copia
 	this->value--;
 	return(current_value);
 }
@@ -166,8 +166,28 @@ Fixed& Fixed::operator--()
 	return(*this);
 }
 
-static Fixed& min(Fixed& a, Fixed& b)
+Fixed& Fixed::min(Fixed& a, Fixed& b)
 {
+	if(a < b)
+		return(a);
+	return(b);
 	//Devuelve una referencia al menor
-	
+}
+const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
+{
+	if(a < b)
+		return(a);
+	return(b);
+}
+Fixed& Fixed::max(Fixed& a, Fixed& b)
+{
+	if(a > b)
+		return(a);
+	return(b);
+}
+const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
+{
+	if(a > b)
+		return(a);
+	return(b);
 }
