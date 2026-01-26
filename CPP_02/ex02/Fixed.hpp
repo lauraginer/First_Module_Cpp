@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:49:05 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/26 12:57:27 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:52:50 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ public:
 	Fixed &operator--();    //Funcion del operador aritmetico de -- predecremento
 	Fixed operator--(int);  //Funcion del operador aritmetico de -- postdecremento
 	
-	static Fixed& min(Fixed& a, Fixed& b);
-	static const Fixed& min(const Fixed& a, const Fixed& b);
-	static Fixed& max(Fixed& a, Fixed& b);
-	static const Fixed& max(const Fixed& a, const Fixed& b);	
+	static Fixed& min(Fixed& a, Fixed& b); 						//Devuelve una referencia al menor
+	static const Fixed& min(const Fixed& a, const Fixed& b);	//Devuelve una referencia al menor, pero permite recibir const
+	static Fixed& max(Fixed& a, Fixed& b);						//Devuelve una referencia al mayor
+	static const Fixed& max(const Fixed& a, const Fixed& b);	//Devuelve una referencia al mayor, pero permite recibir const
 };
 
 std::ostream &operator<<(std::ostream& out, Fixed const& obj); //Funcion de sobrecarga del operador <<

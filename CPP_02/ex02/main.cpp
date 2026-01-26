@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:49:16 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/26 13:09:18 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:48:09 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ int main( void )
 	std::cout << a << std::endl;
 	std::cout << b << std::endl;
 	std::cout << Fixed::max( a, b ) << std::endl;
-	
+	std::cout << std::endl;
+	std::cout << "My test:\n";
+	std::cout << Fixed::max( a, b ) << std::endl;
+	std::cout << Fixed::min( a, b ) << std::endl;
+	std::cout << a + b << std::endl;
+	std::cout << a - b << std::endl;
+	std::cout << a / b << std::endl;
+
 	return 0;
 }

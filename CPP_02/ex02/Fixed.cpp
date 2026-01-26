@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 19:48:56 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/26 13:03:07 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:50:03 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,12 +166,12 @@ Fixed& Fixed::operator--()
 	return(*this);
 }
 
+//Funciones min/max
 Fixed& Fixed::min(Fixed& a, Fixed& b)
 {
 	if(a < b)
 		return(a);
 	return(b);
-	//Devuelve una referencia al menor
 }
 const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
 {
