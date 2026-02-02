@@ -6,12 +6,12 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 13:44:00 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/01/21 16:50:46 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:34:25 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Fixed_HPP
-#define Fixed_HPP
+#ifndef FIXED_HPP
+#define FIXED_HPP
 
 #include <string>
 
