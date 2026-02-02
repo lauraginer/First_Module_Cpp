@@ -6,12 +6,12 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:33 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/02 12:39:06 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/02 17:39:22 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLASSTRAP_HPP
-#define CLASSTRAP_HPP
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
 
 #include <string>
 
