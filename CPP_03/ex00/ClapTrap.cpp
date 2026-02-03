@@ -6,14 +6,14 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:39 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/02 17:33:32 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/03 22:04:33 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 #include <iostream>
 
-ClapTrap::ClapTrap(): name(""), hit_points(10), energy_points(10), attack_damage(0) // Constructor por defecto
+ClapTrap::ClapTrap(std::string nick): name(nick), hit_points(10), energy_points(10), attack_damage(0) // Constructor por defecto
 {
 	std::cout << "Default constructor called\n";
 }
@@ -37,13 +37,58 @@ ClapTrap::~ClapTrap() // Destructor
 {
 	std::cout << "Destructor called\n";
 }
-void attack(const std::string& target); 
+void ClapTrap::attack(const std::string& target)
+{
+	if(energy_points <= 0)
+	{
+		std::cout << "ClapTrap has not energy!"<< std::endl;
+		return;
+	}	
+	if(hit_points <= 0)
+	{
+		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		return;
+
+	}
+	energy_points--;
+	std::cout << "ATTACK: " << "ClapTrap" << " " << name << " " << "attacks" << " " << target << " " << "causing" << " " << attack_damage << " " << "points of damage!" << std::endl;
+	//ClapTrap <name> attacks <target>, causing <damage> points of damage!
+}
 //Cuando se ataca, hace que su objetivo pierda tantos puntos de vida
 //como indica amount
 
-//Ejemplo de salida: ClapTrap <name> attacks <target>, causing <damage> points of damage!
+void ClapTrap::takeDamage(unsigned int amount)
+{
+	if(hit_points <= 0)
+	{
+		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		return;
 
-void takeDamage(unsigned int amount);
+	}
+	if(amount >= hit_points)
+        hit_points = 0;
+	else
+		hit_points = hit_points - amount;
+	std::cout << "DAMAGE: " << "ClapTrap" << " " << name << " " << "takes" << " " << amount << " " << "points of damage!" << std::endl;
+	if(hit_points == 0)
+		std::cout << "No! ClapTrap is already dead!"<< std::endl;
 
-void beRepaired(unsigned int amount);
-//Cuando se recupera, recupera tantos puntos de vida como indica amount
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+	if(energy_points <= 0)
+	{
+		std::cout << "ClapTrap has not energy!"<< std::endl;
+		return;
+	}	
+	if(hit_points <= 0)
+	{
+		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		return;
+
+	}
+	energy_points--;
+	hit_points = hit_points + amount;
+	std::cout << "RECUPERATE: " << "ClapTrap" << " " << name << " " << "recuperates" << " " << amount << " " << "points of life!" << std::endl;
+}

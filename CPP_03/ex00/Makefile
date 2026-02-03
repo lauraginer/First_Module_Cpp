@@ -6,7 +6,7 @@
 #    By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/02 12:16:50 by lginer-m          #+#    #+#              #
-#    Updated: 2026/02/02 12:17:46 by lginer-m         ###   ########.fr        #
+#    Updated: 2026/02/03 19:33:37 by lginer-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
 
 OBJS_DIR := build
 
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp ClapTrap.cpp
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 
 BLUE = \033[0;34m
