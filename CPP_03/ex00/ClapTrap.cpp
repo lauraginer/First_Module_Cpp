@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:39 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/03 22:04:33 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/04 17:47:02 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,34 @@ void ClapTrap::attack(const std::string& target)
 	}	
 	if(hit_points <= 0)
 	{
-		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		std::cout << "Oh No! ClapTrap is already dead!"<< std::endl;
 		return;
 
 	}
 	energy_points--;
 	std::cout << "ATTACK: " << "ClapTrap" << " " << name << " " << "attacks" << " " << target << " " << "causing" << " " << attack_damage << " " << "points of damage!" << std::endl;
-	//ClapTrap <name> attacks <target>, causing <damage> points of damage!
 }
-//Cuando se ataca, hace que su objetivo pierda tantos puntos de vida
-//como indica amount
+// Cuando se ataca, hace que su objetivo pierda tantos puntos de vida como indica amount
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
 	if(hit_points <= 0)
 	{
-		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		std::cout << "Oh No! ClapTrap is already dead!"<< std::endl;
 		return;
-
 	}
-	if(amount >= hit_points)
+	if(amount > 2147483647) // MAX INT
+	{
+		std::cout << "Invalid damage amount!"<< std::endl;
+		return;
+	}
+	if(amount >= hit_points) // Se hace para evitar overflow
         hit_points = 0;
 	else
 		hit_points = hit_points - amount;
 	std::cout << "DAMAGE: " << "ClapTrap" << " " << name << " " << "takes" << " " << amount << " " << "points of damage!" << std::endl;
 	if(hit_points == 0)
-		std::cout << "No! ClapTrap is already dead!"<< std::endl;
-
+		std::cout << "Oh No! ClapTrap is already dead!"<< std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
@@ -84,9 +85,14 @@ void ClapTrap::beRepaired(unsigned int amount)
 	}	
 	if(hit_points <= 0)
 	{
-		std::cout << "No! ClapTrap is already dead!"<< std::endl;
+		std::cout << "Oh No! ClapTrap is already dead!"<< std::endl;
 		return;
 
+	}
+	if(amount > 2147483647)
+	{
+		std::cout << "Invalid damage amount!"<< std::endl;
+		return;
 	}
 	energy_points--;
 	hit_points = hit_points + amount;
