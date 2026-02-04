@@ -6,11 +6,12 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:30 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/04 21:26:23 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/02/04 21:31:19 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 #include <iostream>
 
 int main()
@@ -18,24 +19,27 @@ int main()
 	ClapTrap Clap1("Ana");
 	ClapTrap Clap2("Luis");
 	ClapTrap Clap3("Pablo");
+	
+	ScavTrap Scav1("Mauricio");
+	ScavTrap Scav2("Hurraca");
 	std::cout << std::endl;
 	int i = 0;
 
-	//Ana ataca a Luis
+	// Ana ataca a Luis
 	std::cout << "--TEST: ANA ATTACKS LUIS--" << std::endl;
 	Clap1.attack("Luis");
 	Clap2.takeDamage(0);
 	Clap2.beRepaired(4);
 	std::cout << std::endl;
 
-	//Luis ataca a Pablo
+	// Luis ataca a Pablo
 	std::cout << "--TEST: LUIS ATTACKS PABLO--" << std::endl;
 	Clap2.attack("Pablo");
 	Clap3.takeDamage(0);
 	Clap3.beRepaired(0);
 	std::cout << std::endl;
 	
-	//Atacar sin energía (11 veces)
+	// Atacar sin energía (11 veces)
 	std::cout << "--TEST: TRYING TO ATTACK WITHOUT ENERGY--" << std::endl;
 	while(i < 11)
 	{
@@ -44,9 +48,22 @@ int main()
 	}
 	std::cout << std::endl;
 	
-	//Recuperar sin vida
+	// Recuperar sin vida
 	std::cout << "--TEST: TRYING TO RECUPERATE LIFE BEING DEAD--" << std::endl;
 	Clap3.takeDamage(15);
-    Clap3.beRepaired(5); 
+    Clap3.beRepaired(5);
+	std::cout << std::endl;
+
+	// Test ScavTrap
+	std::cout << "--TEST: MAURICIO ATTACKS HURRACA--" << std::endl;
+	Scav1.attack("Hurraca");
+	Scav2.takeDamage(3);
+	Scav2.beRepaired(2);
+	Scav2.attack("Mauricio");
+	std::cout << std::endl;
+	
+	// Test funcion guardGate
+	std::cout << "--TEST: MAKE GUARDGATE--" << std::endl;
+	Scav1.guardGate();
 	std::cout << std::endl;
 }

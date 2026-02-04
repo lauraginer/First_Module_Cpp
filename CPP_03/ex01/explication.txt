@@ -1,0 +1,290 @@
+# HERENCIA EN C++ (Inheritance)
+
+## ¿Qué es la herencia?
+
+La herencia permite a una clase **derivada** (hija) adquirir automáticamente 
+atributos y métodos de una clase **base** (padre). Es un pilar de la POO que 
+facilita la reutilización de código y establece jerarquías lógicas.
+
+---
+
+## Sintaxis Básica
+
+```cpp
+class ClaseBase {
+protected:  // Accesible desde clases derivadas
+    int valor;
+public:
+    void metodoBase();
+};
+
+class ClaseDerivada : public ClaseBase  // ← Herencia pública
+{
+public:
+    void metodoDerivada();  // Método nuevo
+    // Hereda automáticamente: valor, metodoBase()
+};
+```
+
+---
+
+## Modificadores de Acceso en Herencia
+
+### 1. Private (por defecto)
+- Atributos/métodos del padre son inaccesibles desde la clase hija
+- **NO USAR** salvo casos muy específicos
+
+### 2. Protected ⭐
+- Hereda miembros `public` y `protected` como `protected`
+- La clase derivada PUEDE acceder a ellos
+- Útil para jerarquías complejas
+
+### 3. Public ⭐⭐ (MÁS COMÚN)
+```cpp
+class Hija : public Padre
+```
+- Hereda todo manteniendo los niveles de acceso originales
+- `public` del padre → `public` en hija
+- `protected` del padre → `protected` en hija
+- **Regla general:** Usar `public` para herencia en 42
+
+---
+
+## Modificadores de Atributos en la Clase Base
+
+Para que las clases derivadas accedan a los atributos del padre:
+
+### Private (NO funciona con herencia)
+```cpp
+class Padre {
+private:
+    int valor;  // ❌ La clase hija NO puede acceder
+};
+```
+
+### Protected ✓ (CORRECTO para herencia)
+```cpp
+class Padre {
+protected:
+    int valor;  // ✓ La clase hija SÍ puede acceder
+};
+
+class Hija : public Padre {
+public:
+    void usar() {
+        valor = 10;  // ✓ Funciona
+    }
+};
+```
+
+### Public (menos encapsulación)
+```cpp
+class Padre {
+public:
+    int valor;  // Cualquiera puede acceder
+};
+```
+
+---
+
+## Constructores y Destructores
+
+### Construcción (Padre → Hijo)
+
+```cpp
+class Padre {
+protected:
+    std::string nombre;
+public:
+    Padre(std::string n) : nombre(n) {
+        std::cout << "Padre creado\n";
+    }
+};
+
+class Hija : public Padre {
+public:
+    // DEBES llamar al constructor del padre
+    Hija(std::string n) : Padre(n) {  // ← Initialization list
+        std::cout << "Hija creada\n";
+    }
+};
+
+// Output al crear Hija h("Ana"):
+// Padre creado
+// Hija creada
+```
+
+### Destrucción (Hijo → Padre)
+
+```cpp
+~Hija() {
+    std::cout << "Hija destruida\n";
+}
+// Luego automáticamente llama a ~Padre()
+
+// Output al destruir:
+// Hija destruida
+// Padre destruida
+```
+
+**¿Por qué el orden inverso?**
+- **Construcción:** Padre primero (el hijo necesita que el padre esté listo)
+- **Destrucción:** Hijo primero (el hijo puede usar recursos del padre hasta el final)
+
+---
+
+## Sobrescritura de Métodos (Override)
+
+La clase derivada puede redefinir métodos del padre:
+
+```cpp
+class ClapTrap {
+public:
+    void attack(const std::string& target) {
+        std::cout << "ClapTrap attacks!\n";
+    }
+};
+
+class ScavTrap : public ClapTrap {
+public:
+    // Sobrescribe el método attack
+    void attack(const std::string& target) {
+        std::cout << "ScavTrap attacks differently!\n";
+    }
+};
+
+ScavTrap s("Bob");
+s.attack("Enemy");  // Output: "ScavTrap attacks differently!"
+```
+
+---
+
+## Constructor de Copia en Herencia
+
+```cpp
+class Hija : public Padre {
+public:
+    // Constructor de copia
+    Hija(const Hija& other) : Padre(other)  // ← Llama al copy constructor del padre
+    {
+        std::cout << "Hija copiada\n";
+        // NO copies manualmente los atributos del padre
+        // Padre(other) ya lo hizo
+    }
+};
+```
+
+---
+
+## Operador de Asignación en Herencia
+
+```cpp
+Hija& operator=(const Hija& other) {
+    if (this != &other) {
+        Padre::operator=(other);  // ← Llama al operator= del padre
+        // Copia atributos propios de Hija aquí (si los hay)
+    }
+    return *this;
+}
+```
+
+---
+
+## Errores Comunes
+
+### ❌ Error 1: Inicializar atributos del padre en lista de inicialización
+```cpp
+// ❌ INCORRECTO:
+Hija::Hija(std::string n) : nombre(n), edad(10) {}
+// nombre pertenece al Padre, no a Hija
+
+// ✓ CORRECTO:
+Hija::Hija(std::string n) : Padre(n) {
+    // Asigna atributos específicos de Hija aquí
+}
+```
+
+### ❌ Error 2: Atributos private en el padre
+```cpp
+class Padre {
+private:
+    int valor;  // ❌ Hija no puede acceder
+};
+
+// ✓ CORRECTO:
+class Padre {
+protected:
+    int valor;  // ✓ Hija SÍ puede acceder
+};
+```
+
+### ❌ Error 3: Olvidar `: public Padre`
+```cpp
+// ❌ INCORRECTO:
+class Hija : Padre  // Herencia private por defecto
+
+// ✓ CORRECTO:
+class Hija : public Padre  // Herencia pública
+```
+
+---
+
+## Ejemplo Completo: ClapTrap y ScavTrap
+
+```cpp
+// ClapTrap.hpp
+class ClapTrap {
+protected:  // ← protected para que ScavTrap acceda
+    std::string name;
+    unsigned int hit_points;
+    unsigned int energy_points;
+    unsigned int attack_damage;
+    
+public:
+    ClapTrap(std::string n);
+    void attack(const std::string& target);
+    void takeDamage(unsigned int amount);
+};
+
+// ScavTrap.hpp
+class ScavTrap : public ClapTrap  // ← Herencia pública
+{
+public:
+    ScavTrap(std::string n);  // Constructor
+    void attack(const std::string& target);  // Override
+    void guardGate();  // Método nuevo
+};
+
+// ScavTrap.cpp
+ScavTrap::ScavTrap(std::string n) : ClapTrap(n)  // ← Llama al padre
+{
+    hit_points = 100;     // Valores diferentes para ScavTrap
+    energy_points = 50;
+    attack_damage = 20;
+}
+
+void ScavTrap::attack(const std::string& target) {
+    std::cout << "ScavTrap " << name << " attacks!\n";  // Mensaje diferente
+}
+```
+
+---
+
+## Reglas de Oro para Herencia en 42
+
+1. ✓ Usar `class Hija : public Padre`
+2. ✓ Atributos del padre deben ser `protected` (no `private`)
+3. ✓ Siempre llamar al constructor del padre: `Hija(args) : Padre(args)`
+4. ✓ Constructor de copia también llama al padre: `Hija(const Hija& o) : Padre(o)`
+5. ✓ Operador= llama al del padre: `Padre::operator=(other)`
+6. ✓ NO inicialices atributos del padre en la lista de inicialización de la hija
+7. ✓ El destructor del hijo se llama automáticamente antes que el del padre
+
+---
+
+## Ventajas de la Herencia
+
+- **Reutilización de código:** No repites código del padre
+- **Organización:** Jerarquías lógicas (Animal → Perro → Labrador)
+- **Extensibilidad:** Añades funcionalidad sin modificar la clase base
+- **Polimorfismo:** Permite tratar objetos derivados como objetos base (módulos avanzados)

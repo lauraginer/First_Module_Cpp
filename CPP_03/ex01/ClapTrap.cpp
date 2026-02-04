@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:39 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/04 19:27:11 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/02/04 17:47:02 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void ClapTrap::attack(const std::string& target)
 	std::cout << "ATTACK: " << "ClapTrap" << " " << name << " " << "attacks" << " " << target << " " << "causing" << " " << attack_damage << " " << "points of damage!" << std::endl;
 }
 // Cuando se ataca, hace que su objetivo pierda tantos puntos de vida como indica amount
+
 void ClapTrap::takeDamage(unsigned int amount)
 {
 	if(hit_points <= 0)
@@ -74,6 +75,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 	if(hit_points == 0)
 		std::cout << "Oh No! ClapTrap is already dead!"<< std::endl;
 }
+
 void ClapTrap::beRepaired(unsigned int amount)
 {
 	if(energy_points <= 0)

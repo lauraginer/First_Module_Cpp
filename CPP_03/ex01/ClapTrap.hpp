@@ -6,7 +6,7 @@
 /*   By: lauragm <lauragm@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 12:18:33 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/04 18:10:14 by lauragm          ###   ########.fr       */
+/*   Updated: 2026/02/04 18:48:20 by lauragm          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string>
 
 class ClapTrap{
-private:
+protected:
 	std::string name; 			//se pasa como parametro al constructor
 	unsigned int hit_points; 	//representan la vida del ClapTrap
 	unsigned int energy_points;
