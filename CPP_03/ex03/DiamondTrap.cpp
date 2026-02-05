@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 12:09:12 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/05 13:55:21 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/05 17:42:21 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ DiamondTrap::~DiamondTrap() // Destructor
 {
 	std::cout << "Destructor of DiamondTrap called\n";
 }
-
 void DiamondTrap::whoAmI()
 {
 	std::cout << "WHOAMI: DiamondTrap" << " " << name << " " << "and Claptrap " << ClapTrap::name << " " << "exist!";
