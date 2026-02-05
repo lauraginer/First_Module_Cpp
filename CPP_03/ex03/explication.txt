@@ -1,0 +1,315 @@
+===============================================================================
+                    EXPLICACIÓN EJERCICIO 03 - DIAMONDTRAP
+===============================================================================
+
+CONCEPTOS CLAVE:
+----------------
+1. Herencia Virtual
+2. Problema del Diamante (Diamond Problem)
+3. Declaración 'using' para resolver ambigüedad
+4. Herencia Múltiple
+5. Shadowing de variables
+
+
+===============================================================================
+1. HERENCIA VIRTUAL
+===============================================================================
+
+¿QUÉ ES?
+--------
+La herencia virtual es un mecanismo que permite que una clase base sea heredada
+solo UNA VEZ, incluso cuando se hereda a través de múltiples caminos en la 
+jerarquía de clases.
+
+SINTAXIS:
+---------
+class FragTrap : public virtual ClapTrap { ... };
+class ScavTrap : public virtual ClapTrap { ... };
+
+La palabra clave 'virtual' se coloca en las clases INTERMEDIAS, no en la final.
+
+
+===============================================================================
+2. PROBLEMA DEL DIAMANTE (DIAMOND PROBLEM)
+===============================================================================
+
+SIN HERENCIA VIRTUAL:
+---------------------
+        ClapTrap
+         /    \
+    FragTrap  ScavTrap
+         \    /
+      DiamondTrap
+
+Problema: DiamondTrap tendría DOS copias de ClapTrap:
+- Una heredada desde FragTrap
+- Otra heredada desde ScavTrap
+
+Esto causa:
+❌ Ambigüedad: ¿Cuál ClapTrap::name usar?
+❌ Duplicación de memoria
+❌ Errores de compilación
+
+
+CON HERENCIA VIRTUAL:
+---------------------
+        ClapTrap (UNA SOLA instancia)
+         /    \
+    FragTrap  ScavTrap
+         \    /
+      DiamondTrap
+
+Solución: Solo existe UNA copia de ClapTrap compartida por todos.
+
+
+IMPLEMENTACIÓN:
+---------------
+// FragTrap.hpp
+class FragTrap : public virtual ClapTrap { ... };
+
+// ScavTrap.hpp  
+class ScavTrap : public virtual ClapTrap { ... };
+
+// DiamondTrap.hpp (SIN virtual aquí)
+class DiamondTrap : public FragTrap, public ScavTrap { ... };
+
+
+===============================================================================
+3. CONSTRUCTOR CON HERENCIA VIRTUAL
+===============================================================================
+
+RESPONSABILIDAD:
+----------------
+Con herencia virtual, la clase MÁS DERIVADA (DiamondTrap) debe llamar 
+EXPLÍCITAMENTE al constructor de la clase base virtual (ClapTrap).
+
+EJEMPLO:
+--------
+DiamondTrap::DiamondTrap(std::string nick)
+    : ClapTrap(nick + "_clap_name"),  // ✅ OBLIGATORIO llamar a ClapTrap
+      FragTrap(nick),
+      ScavTrap(nick),
+      name(nick)
+{
+    // Inicialización de atributos
+    hit_points = 100;      // De FragTrap
+    energy_points = 50;    // De ScavTrap
+    attack_damage = 30;    // De FragTrap
+}
+
+NOTA: El orden de llamada es:
+1. ClapTrap (base virtual)
+2. FragTrap 
+3. ScavTrap
+4. DiamondTrap
+
+
+===============================================================================
+4. DECLARACIÓN 'using' PARA RESOLVER AMBIGÜEDAD
+===============================================================================
+
+PROBLEMA:
+---------
+DiamondTrap hereda attack() de dos lugares:
+- FragTrap::attack() (heredado de ClapTrap)
+- ScavTrap::attack() (sobrescrito en ScavTrap)
+
+¿Cuál usar?
+
+
+SOLUCIÓN - DECLARACIÓN 'using':
+----------------------------------
+// En DiamondTrap.hpp
+class DiamondTrap : public FragTrap, public ScavTrap
+{
+public:
+    using ScavTrap::attack;  // ✅ Usa específicamente el de ScavTrap
+    void whoAmI();
+};
+
+Esto indica al compilador que DiamondTrap debe usar attack() de ScavTrap.
+El término de using en C++ es una palabra clave utilizada para gestionar la visibilidad 
+de identificadores (nombres de funciones, clases, variables) dentro de un ámbito (namespace o clase),
+en este caso, permite a una clase derivada heredar constructores de la base, ej. using Base::Base;.  
+
+
+===============================================================================
+5. SHADOWING DE VARIABLES
+===============================================================================
+
+CONCEPTO:
+---------
+DiamondTrap tiene un atributo 'name' que tiene el MISMO NOMBRE que 
+ClapTrap::name. Esto se llama "shadowing" (sombreado).
+
+ESTRUCTURA:
+-----------
+class ClapTrap {
+private:
+    std::string name;  // "Bob_clap_name"
+};
+
+class DiamondTrap : public FragTrap, public ScavTrap {
+private:
+    std::string name;  // "Bob" (sombrea a ClapTrap::name)
+};
+
+
+ACCESO A AMBOS:
+---------------
+void DiamondTrap::whoAmI()
+{
+    std::cout << "I am DiamondTrap " << name              // DiamondTrap::name
+              << " and my ClapTrap name is " << ClapTrap::name  // ClapTrap::name
+              << std::endl;
+}
+
+
+COMPILACIÓN CON -Wshadow:
+--------------------------
+El flag -Wshadow detecta shadowing. Es NORMAL que genere warnings en este
+ejercicio, ya que el subject PIDE intencionalmente que uses el mismo nombre.
+
+
+===============================================================================
+6. ATRIBUTOS HEREDADOS DE MÚLTIPLES CLASES
+===============================================================================
+
+SEGÚN EL SUBJECT:
+-----------------
+• Name → parámetro del constructor (DiamondTrap::name)
+• ClapTrap::name → name + "_clap_name"
+• Hit points (100) → De FragTrap
+• Energy points (50) → De ScavTrap
+• Attack damage (30) → De FragTrap
+• attack() → De ScavTrap
+
+
+INICIALIZACIÓN MANUAL:
+----------------------
+DiamondTrap::DiamondTrap(std::string nick)
+    : ClapTrap(nick + "_clap_name"),
+      FragTrap(nick),
+      ScavTrap(nick),
+      name(nick)
+{
+    // NO puedes hacer FragTrap::hit_points (no es estático)
+    // Debes asignar valores directamente:
+    hit_points = 100;      // FragTrap value
+    energy_points = 50;    // ScavTrap value
+    attack_damage = 30;    // FragTrap value
+}
+
+
+===============================================================================
+7. ORDEN DE DESTRUCTORES
+===============================================================================
+
+ORDEN INVERSO A CONSTRUCTORES:
+-------------------------------
+Constructores:
+1. ClapTrap
+2. FragTrap
+3. ScavTrap  
+4. DiamondTrap
+
+Destructores:
+1. ~DiamondTrap
+2. ~ScavTrap
+3. ~FragTrap
+4. ~ClapTrap (UNA sola vez gracias a herencia virtual)
+
+
+OUTPUT ESPERADO:
+----------------
+Destructor of DiamondTrap called
+Destructor of ScavTrap called
+Destructor of FragTrap called
+Destructor called  (ClapTrap)
+
+
+===============================================================================
+8. FUNCIÓN whoAmI()
+===============================================================================
+
+PROPÓSITO:
+----------
+Demostrar que DiamondTrap tiene DOS nombres diferentes:
+- DiamondTrap::name (nombre propio)
+- ClapTrap::name (nombre heredado con sufijo)
+
+
+IMPLEMENTACIÓN:
+---------------
+void DiamondTrap::whoAmI()
+{
+    std::cout << "I am DiamondTrap " << name 
+              << " and my ClapTrap name is " << ClapTrap::name 
+              << std::endl;
+}
+
+
+EJEMPLO DE USO:
+---------------
+DiamondTrap diamond("Bob");
+diamond.whoAmI();
+
+Output:
+I am DiamondTrap Bob and my ClapTrap name is Bob_clap_name
+
+
+===============================================================================
+9. ERRORES COMUNES Y SOLUCIONES
+===============================================================================
+
+ERROR 1: "is not a direct or virtual base"
+-------------------------------------------
+Problema: Falta herencia en DiamondTrap.hpp
+Solución: class DiamondTrap : public FragTrap, public ScavTrap
+
+
+ERROR 2: "ambiguous access of 'name'"
+--------------------------------------
+Problema: Compilador no sabe qué 'name' usar
+Solución: Usar ClapTrap::name explícitamente
+
+
+ERROR 3: "invalid use of non-static data member 'hit_points'"
+--------------------------------------------------------------
+Problema: hit_points = FragTrap::hit_points;
+Solución: hit_points = 100; (valor hardcodeado)
+
+
+ERROR 4: Múltiples instancias de ClapTrap
+------------------------------------------
+Problema: No usar herencia virtual
+Solución: class FragTrap : public virtual ClapTrap
+
+
+ERROR 5: Constructor no inicializa ClapTrap
+--------------------------------------------
+Problema: Con herencia virtual, debes llamar a ClapTrap explícitamente
+Solución: DiamondTrap(...) : ClapTrap(nick + "_clap_name"), ...
+
+
+===============================================================================
+10. CHECKLIST PARA PASAR EL SUBJECT
+===============================================================================
+
+✅ DiamondTrap hereda de FragTrap Y ScavTrap
+✅ FragTrap y ScavTrap usan herencia VIRTUAL de ClapTrap
+✅ DiamondTrap tiene atributo privado 'name' (mismo nombre que ClapTrap)
+✅ Constructor inicializa ClapTrap::name con sufijo "_clap_name"
+✅ Hit points = 100 (FragTrap)
+✅ Energy points = 50 (ScavTrap)
+✅ Attack damage = 30 (FragTrap)
+✅ attack() usa la implementación de ScavTrap (using ScavTrap::attack;)
+✅ Función whoAmI() implementada correctamente
+✅ Solo UNA instancia de ClapTrap por objeto DiamondTrap
+✅ Destructores se llaman en orden correcto
+✅ Tests adicionales en main.cpp
+
+
+===============================================================================
+FIN DE LA EXPLICACIÓN
+===============================================================================
