@@ -1,0 +1,269 @@
+===============================================================================
+                    EXPLICACIÓN EJERCICIO 00 - POLIMORFISMO
+===============================================================================
+
+CONCEPTOS CLAVE:
+----------------
+1. Funciones virtuales (virtual functions)
+2. Destructores virtuales (virtual destructors)
+3. Polimorfismo dinámico
+4. Por qué NO usar virtual (WrongAnimal)
+
+
+===============================================================================
+1. ¿QUÉ ES 'virtual'?
+===============================================================================
+
+'virtual' permite que una función sea SOBRESCRITA (override) en clases derivadas
+y que se llame a la versión CORRECTA en tiempo de ejecución.
+
+SIN virtual:   El compilador decide en COMPILACIÓN (tipo del puntero)
+CON virtual:   El compilador decide en EJECUCIÓN (tipo del objeto real)
+
+
+===============================================================================
+2. FUNCIONES VIRTUALES
+===============================================================================
+
+DECLARACIÓN:
+------------
+class Animal
+{
+public:
+    virtual void makeSound() const;  // ✅ Puede ser sobrescrita
+};
+
+class Cat : public Animal
+{
+public:
+    void makeSound() const;  // ✅ Sobrescribe Animal::makeSound()
+};
+
+
+USO:
+----
+const Animal* animal = new Cat();
+animal->makeSound();  // ✅ Llama a Cat::makeSound() (polimorfismo)
+
+
+SIN VIRTUAL:
+------------
+class WrongAnimal
+{
+public:
+    void makeSound() const;  // ❌ NO virtual
+};
+
+const WrongAnimal* wrong = new WrongCat();
+wrong->makeSound();  // ❌ Llama a WrongAnimal::makeSound() (NO polimorfismo)
+
+
+===============================================================================
+3. DESTRUCTORES VIRTUALES
+===============================================================================
+
+PROBLEMA SIN VIRTUAL:
+---------------------
+class WrongAnimal { ~WrongAnimal(); };  // ❌ NO virtual
+
+const WrongAnimal* ptr = new WrongCat();
+delete ptr;
+
+Resultado:
+    Destructor of WrongAnimal called    ← Solo este
+    (NO llama ~WrongCat)                ← ❌ MEMORY LEAK
+
+
+SOLUCIÓN CON VIRTUAL:
+---------------------
+class Animal { virtual ~Animal(); };  // ✅ Virtual
+
+const Animal* ptr = new Cat();
+delete ptr;
+
+Resultado:
+    Destructor of Cat called       ← Primero derivada ✅
+    Destructor of Animal called    ← Luego base ✅
+
+
+REGLA DE ORO:
+-------------
+Si una clase:
+  - Tiene funciones virtuales, O
+  - Se usa como clase base
+
+→ El destructor DEBE ser virtual
+
+
+===============================================================================
+4. HERENCIA VIRTUAL (diferente concepto - CPP_03/ex03)
+===============================================================================
+
+NO CONFUNDIR con funciones virtuales. Se usa para herencia múltiple:
+
+class FragTrap : public virtual ClapTrap {};  // ← Herencia virtual
+class ScavTrap : public virtual ClapTrap {};
+class DiamondTrap : public FragTrap, public ScavTrap {};
+
+Evita tener múltiples copias de ClapTrap en DiamondTrap.
+
+
+===============================================================================
+5. COMPARACIÓN VISUAL
+===============================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    CON VIRTUAL (Animal/Cat/Dog)                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  const Animal* ptr = new Cat();                                     │
+│  ptr->makeSound();    → "Meow!"  ✅ (llama a Cat::makeSound)       │
+│  delete ptr;          → ~Cat() + ~Animal()  ✅ (ambos)             │
+│                                                                     │
+│  Polimorfismo: ✅ FUNCIONA                                          │
+│  Memory leaks: ✅ NO                                                │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│              SIN VIRTUAL (WrongAnimal/WrongCat)                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  const WrongAnimal* ptr = new WrongCat();                           │
+│  ptr->makeSound();    → "Generic"  ❌ (llama a WrongAnimal)        │
+│  delete ptr;          → ~WrongAnimal()  ❌ (solo base)             │
+│                                                                     │
+│  Polimorfismo: ❌ NO FUNCIONA                                       │
+│  Memory leaks: ❌ SÍ (WrongCat no se destruye)                     │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+===============================================================================
+6. TABLA RESUMEN
+===============================================================================
+
+┌──────────────────────┬──────────────────┬──────────────────────────┐
+│ Elemento             │ Animal           │ WrongAnimal              │
+├──────────────────────┼──────────────────┼──────────────────────────┤
+│ Destructor           │ virtual ~Animal()│ ~WrongAnimal()           │
+│                      │ ✅ Virtual        │ ❌ NO virtual            │
+├──────────────────────┼──────────────────┼──────────────────────────┤
+│ makeSound()          │ virtual          │ NO virtual               │
+│                      │ ✅ Polimorfismo   │ ❌ NO polimorfismo       │
+├──────────────────────┼──────────────────┼──────────────────────────┤
+│ delete ptr           │ Llama ~Cat()     │ NO llama ~WrongCat()     │
+│ (apunta a derivada)  │ y ~Animal()      │ Solo ~WrongAnimal()      │
+│                      │ ✅ Correcto       │ ❌ Memory leak           │
+└──────────────────────┴──────────────────┴──────────────────────────┘
+
+
+===============================================================================
+7. LA GRACIA DEL EJERCICIO
+===============================================================================
+
+OBJETIVO:
+---------
+Entender CUÁNDO y POR QUÉ necesitas 'virtual'.
+
+DEMOSTRACIÓN:
+-------------
+1. Animal/Cat/Dog:
+   → CON 'virtual' → Polimorfismo funciona ✅
+   → Cada animal hace su propio sonido
+   → Destructores se llaman correctamente
+   → NO hay memory leaks
+
+2. WrongAnimal/WrongCat:
+   → SIN 'virtual' → Polimorfismo NO funciona ❌
+   → WrongCat suena como WrongAnimal (genérico)
+   → Destructor de WrongCat NO se llama
+   → SÍ hay memory leaks
+
+LECCIÓN:
+--------
+Cuando usas punteros a clase base (Animal*) que apuntan a clases derivadas
+(Cat), NECESITAS 'virtual' para:
+
+  ✅ Que se llame a la función correcta (polimorfismo)
+  ✅ Que los destructores se ejecuten en orden correcto
+  ✅ Evitar memory leaks
+
+
+===============================================================================
+8. EJEMPLO DE CÓDIGO
+===============================================================================
+
+// Animal.hpp
+class Animal
+{
+public:
+    virtual ~Animal();              // ✅ Destructor virtual
+    virtual void makeSound() const; // ✅ Función virtual
+};
+
+// Cat.hpp
+class Cat : public Animal
+{
+public:
+    ~Cat();                         // Override implícito
+    void makeSound() const;         // Override implícito
+};
+
+// main.cpp
+const Animal* ptr = new Cat();
+ptr->makeSound();  // "Meow!" ✅ (polimorfismo)
+delete ptr;        // Llama ~Cat() y ~Animal() ✅
+
+
+// WrongAnimal.hpp
+class WrongAnimal
+{
+public:
+    ~WrongAnimal();                 // ❌ NO virtual
+    void makeSound() const;         // ❌ NO virtual
+};
+
+// main.cpp
+const WrongAnimal* ptr = new WrongCat();
+ptr->makeSound();  // "Generic animal" ❌ (NO polimorfismo)
+delete ptr;        // Solo llama ~WrongAnimal() ❌ (memory leak)
+
+
+===============================================================================
+9. CUÁNDO USAR 'virtual'
+===============================================================================
+
+SIEMPRE:
+--------
+✅ Destructor en clase base (si se usa herencia)
+✅ Funciones que se sobrescriben en clases derivadas
+✅ Cuando quieres polimorfismo
+
+NUNCA (a propósito):
+--------------------
+❌ Para demostrar problemas (como WrongAnimal en el ejercicio)
+❌ Cuando NO quieres polimorfismo (raro)
+
+
+===============================================================================
+10. CHECKLIST DEL EJERCICIO
+===============================================================================
+
+Animal/Cat/Dog:
+  ✅ Animal tiene 'virtual ~Animal()'
+  ✅ Animal tiene 'virtual void makeSound() const'
+  ✅ Cat/Dog sobrescriben makeSound()
+  ✅ Cat hace "Meow", Dog hace "Woof"
+  ✅ Polimorfismo funciona (ptr->makeSound() llama a la versión correcta)
+
+WrongAnimal/WrongCat:
+  ✅ WrongAnimal NO tiene 'virtual' en destructor
+  ✅ WrongAnimal NO tiene 'virtual' en makeSound()
+  ✅ WrongCat hace su sonido, pero NO se escucha con punteros WrongAnimal*
+  ✅ Demuestra el problema de NO usar virtual
+
+
+===============================================================================
+FIN DE LA EXPLICACIÓN
+===============================================================================
