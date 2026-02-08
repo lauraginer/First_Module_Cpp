@@ -1,0 +1,523 @@
+===============================================================================
+              EXPLICACIÓN EJERCICIO 01 - DEEP COPY Y GESTIÓN DE MEMORIA
+===============================================================================
+
+Este ejercicio amplía el polimorfismo del ex00 añadiendo conceptos cruciales:
+  1. Deep Copy vs Shallow Copy
+  2. La Regla de los Tres (Rule of Three)
+  3. Gestión dinámica de memoria (new/delete)
+  4. Composición de clases (Brain)
+  5. Memory leaks y valgrind
+
+===============================================================================
+1. SHALLOW COPY vs DEEP COPY
+===============================================================================
+
+SHALLOW COPY (Copia Superficial):
+----------------------------------
+Copia los valores directamente, incluyendo punteros.
+Resultado: DOS OBJETOS APUNTAN A LA MISMA MEMORIA.
+
+Ejemplo con shallow copy:
+    Dog dog1;
+    Dog dog2 = dog1;  // ❌ Shallow copy (si no implementamos copy constructor)
+
+Memoria:
+    dog1.brain ────┐
+                   ├──→ [Brain en heap]
+    dog2.brain ────┘
+
+PROBLEMA:
+    ~Dog() { delete brain; }  // dog1 destruye brain
+    ~Dog() { delete brain; }  // dog2 intenta destruir brain OTRA VEZ → CRASH!
+
+
+DEEP COPY (Copia Profunda):
+----------------------------
+Crea una NUEVA copia del objeto apuntado.
+Resultado: CADA OBJETO TIENE SU PROPIA MEMORIA.
+
+Ejemplo con deep copy:
+    Dog dog1;
+    Dog dog2 = dog1;  // ✅ Deep copy (implementamos copy constructor)
+
+Memoria:
+    dog1.brain ──→ [Brain 1 en heap]
+    dog2.brain ──→ [Brain 2 en heap]  (copia independiente)
+
+SOLUCIÓN:
+    ~Dog() { delete brain; }  // dog1 destruye brain1 ✓
+    ~Dog() { delete brain; }  // dog2 destruye brain2 ✓
+
+
+===============================================================================
+2. LA REGLA DE LOS TRES (Rule of Three)
+===============================================================================
+
+Si tu clase gestiona recursos dinámicos (punteros, new/delete), DEBES 
+implementar estas tres funciones:
+
+1. DESTRUCTOR
+2. CONSTRUCTOR DE COPIA (Copy Constructor)
+3. OPERADOR DE ASIGNACIÓN (Copy Assignment Operator)
+
+
+REGLA: Si implementas UNO, implementa los TRES.
+
+
+EJEMPLO EN NUESTRO EJERCICIO:
+------------------------------
+
+class Dog : public Animal
+{
+private:
+    Brain* brain;
+
+public:
+    // 1. DESTRUCTOR
+    ~Dog()
+    {
+        delete brain;  // Libera memoria del Brain
+        std::cout << "Destructor of Dog called\n";
+    }
+
+    // 2. CONSTRUCTOR DE COPIA
+    Dog(const Dog& other) : Animal(other)
+    {
+        brain = new Brain(*other.brain);  // Deep copy
+        std::cout << "Copy constructor of Dog called\n";
+    }
+
+    // 3. OPERADOR DE ASIGNACIÓN
+    Dog& operator=(const Dog& other)
+    {
+        std::cout << "Copy assignment operator of Dog called\n";
+        if(this != &other)  // Protección contra auto-asignación
+        {
+            Animal::operator=(other);
+            delete brain;  // Libera el brain antiguo
+            brain = new Brain(*other.brain);  // Deep copy del nuevo
+        }
+        return *this;
+    }
+};
+
+
+===============================================================================
+3. CONSTRUCTOR DE COPIA (Copy Constructor)
+===============================================================================
+
+Se llama cuando CREAS un objeto a partir de otro:
+
+Dog dog1;
+Dog dog2(dog1);     // ✅ Copy constructor
+Dog dog3 = dog1;    // ✅ Copy constructor (misma sintaxis diferente)
+
+
+SINTAXIS:
+---------
+ClassName(const ClassName& other);
+
+
+IMPLEMENTACIÓN CORRECTA (Deep Copy):
+-------------------------------------
+Dog::Dog(const Dog& other) : Animal(other)  // Llama al copy de Animal
+{
+    brain = new Brain(*other.brain);  // Crea NUEVO Brain (deep copy)
+    std::cout << "Copy constructor of Dog called\n";
+}
+
+
+IMPLEMENTACIÓN INCORRECTA (Shallow Copy):
+------------------------------------------
+Dog::Dog(const Dog& other) : Animal(other)
+{
+    brain = other.brain;  // ❌ Apunta al MISMO Brain (shallow copy)
+}
+
+
+===============================================================================
+4. OPERADOR DE ASIGNACIÓN (Copy Assignment Operator)
+===============================================================================
+
+Se llama cuando ASIGNAS un objeto a otro YA EXISTENTE:
+
+Dog dog1;
+Dog dog2;
+dog2 = dog1;  // ✅ Assignment operator
+
+
+SINTAXIS:
+---------
+ClassName& operator=(const ClassName& other);
+
+
+IMPLEMENTACIÓN CORRECTA:
+------------------------
+Dog& Dog::operator=(const Dog& other)
+{
+    std::cout << "Copy assignment operator of Dog called\n";
+    
+    // 1. Protección contra auto-asignación
+    if(this != &other)
+    {
+        // 2. Llama al assignment de la clase base
+        Animal::operator=(other);
+        
+        // 3. Libera el recurso antiguo
+        delete brain;
+        
+        // 4. Copia el nuevo recurso (deep copy)
+        brain = new Brain(*other.brain);
+    }
+    
+    // 5. Devuelve *this para permitir asignaciones encadenadas
+    return *this;
+}
+
+
+PASOS CRÍTICOS:
+---------------
+1. Protección contra auto-asignación: if(this != &other)
+   → Evita problemas si haces: dog1 = dog1;
+
+2. Llamar al operator= de la clase base
+   → Copia correctamente los atributos heredados
+
+3. Liberar recursos antiguos: delete brain;
+   → Evita memory leaks
+
+4. Asignar nuevos recursos con deep copy: new Brain(*other.brain);
+   → Cada objeto tiene su propia copia
+
+5. Devolver *this
+   → Permite hacer: dog3 = dog2 = dog1;
+
+
+===============================================================================
+5. COMPOSICIÓN Y BRAIN CLASS
+===============================================================================
+
+COMPOSICIÓN:
+------------
+Una clase contiene objetos de otra clase.
+En nuestro caso: Dog/Cat TIENEN un Brain.
+
+class Dog : public Animal
+{
+private:
+    Brain* brain;  // Dog "TIENE UN" Brain (composición)
+};
+
+
+¿POR QUÉ PUNTERO (Brain*) EN VEZ DE OBJETO (Brain)?
+----------------------------------------------------
+1. Permite gestión dinámica de memoria
+2. Facilita deep copy manual
+3. Más control sobre cuándo se crea/destruye
+4. Evita problemas de slicing
+
+
+CICLO DE VIDA DEL BRAIN:
+-------------------------
+
+1. CONSTRUCCIÓN:
+   Dog::Dog() : Animal()
+   {
+       brain = new Brain();  // Crea Brain en el heap
+   }
+
+2. USO:
+   dog.getBrain()->ideas[0] = "I'm hungry";
+
+3. COPIA (Deep):
+   Dog::Dog(const Dog& other) : Animal(other)
+   {
+       brain = new Brain(*other.brain);  // Copia independiente
+   }
+
+4. DESTRUCCIÓN:
+   Dog::~Dog()
+   {
+       delete brain;  // Libera la memoria del Brain
+   }
+
+
+===============================================================================
+6. MEMORY LEAKS Y VALGRIND
+===============================================================================
+
+MEMORY LEAK:
+------------
+Ocurre cuando asignas memoria con 'new' pero NO la liberas con 'delete'.
+
+EJEMPLO DE LEAK:
+----------------
+void function()
+{
+    Dog* dog = new Dog();
+    // ... código ...
+    // ❌ NUNCA se hace delete dog → MEMORY LEAK
+}
+
+
+CÓMO DETECTAR LEAKS CON VALGRIND:
+----------------------------------
+Comando:
+    valgrind --leak-check=full ./program
+
+Salida SIN leaks:
+    ==12345== HEAP SUMMARY:
+    ==12345==     in use at exit: 0 bytes in 0 blocks
+    ==12345==   total heap usage: 15 allocs, 15 frees, ...
+    ==12345== 
+    ==12345== All heap blocks were freed -- no leaks are possible
+
+Salida CON leaks:
+    ==12345== LEAK SUMMARY:
+    ==12345==    definitely lost: 104 bytes in 1 blocks  ❌
+
+
+BUENAS PRÁCTICAS:
+-----------------
+1. Cada 'new' debe tener su 'delete' correspondiente
+2. Usar destructores virtuales en clases base
+3. Implementar la Regla de los Tres si usas new/delete
+4. Probar siempre con valgrind antes de entregar
+
+
+===============================================================================
+7. DESTRUCTORES VIRTUALES Y POLIMORFISMO
+===============================================================================
+
+PROBLEMA SIN VIRTUAL:
+---------------------
+class Animal
+{
+public:
+    ~Animal() { }  // ❌ NO virtual
+};
+
+Animal* ptr = new Dog();
+delete ptr;
+
+Resultado:
+    ~Animal()  ✅ Se llama
+    ~Dog()     ❌ NO se llama → Brain NO se libera → MEMORY LEAK
+
+
+SOLUCIÓN CON VIRTUAL:
+---------------------
+class Animal
+{
+public:
+    virtual ~Animal() { }  // ✅ Virtual
+};
+
+Animal* ptr = new Dog();
+delete ptr;
+
+Resultado:
+    ~Dog()     ✅ Se llama primero → Libera Brain
+    ~Animal()  ✅ Se llama después
+
+
+REGLA DE ORO:
+-------------
+Si una clase está diseñada para ser heredada:
+    → El destructor DEBE ser virtual
+
+
+===============================================================================
+8. DIAGRAMA COMPLETO DEL EJERCICIO
+===============================================================================
+
+ESTRUCTURA DE CLASES:
+----------------------
+
+        ┌──────────────┐
+        │   Animal     │
+        │ (virtual ~)  │
+        └──────┬───────┘
+               │
+       ┌───────┴───────┐
+       │               │
+  ┌────▼────┐     ┌────▼────┐
+  │   Dog   │     │   Cat   │
+  │ Brain*  │     │ Brain*  │
+  └────┬────┘     └────┬────┘
+       │               │
+       │               │
+       ▼               ▼
+  ┌─────────┐     ┌─────────┐
+  │  Brain  │     │  Brain  │
+  │ideas[100]│    │ideas[100]│
+  └─────────┘     └─────────┘
+
+
+CICLO DE VIDA COMPLETO:
+------------------------
+
+1. CREACIÓN:
+   Dog* dog = new Dog();
+   
+   Constructores llamados:
+   ├─ Default constructor of Animal called
+   ├─ Default constructor of Brain called
+   └─ Default constructor of Dog called
+
+2. COPIA (Deep Copy):
+   Dog* dog2 = new Dog(*dog);
+   
+   Constructores llamados:
+   ├─ Copy constructor of Animal called
+   ├─ Default constructor of Brain called  (nuevo Brain)
+   └─ Copy constructor of Dog called
+
+3. ASIGNACIÓN:
+   *dog2 = *dog;
+   
+   Operadores llamados:
+   ├─ Copy assignment operator of Animal called
+   ├─ Destructor of Brain called (brain antiguo)
+   ├─ Default constructor of Brain called (nuevo Brain)
+   └─ Copy assignment operator of Dog called
+
+4. DESTRUCCIÓN:
+   delete dog;
+   
+   Destructores llamados:
+   ├─ Destructor of Dog called
+   ├─ Destructor of Brain called
+   └─ Destructor of Animal called
+
+===============================================================================
+9. ERRORES COMUNES Y SOLUCIONES
+===============================================================================
+
+ERROR 1: Olvidar asignar el puntero
+------------------------------------
+❌ INCORRECTO:
+Cat::Cat() : Animal()
+{
+    type = "Cat";
+    new Brain();  // ¡NO se asigna a brain!
+}
+
+✅ CORRECTO:
+Cat::Cat() : Animal()
+{
+    type = "Cat";
+    brain = new Brain();  // Asignar el puntero
+}
+
+
+ERROR 2: Shallow copy en constructor de copia
+----------------------------------------------
+❌ INCORRECTO:
+Dog::Dog(const Dog& other) : Animal(other)
+{
+    brain = other.brain;  // Ambos apuntan al mismo Brain
+}
+
+✅ CORRECTO:
+Dog::Dog(const Dog& other) : Animal(other)
+{
+    brain = new Brain(*other.brain);  // Nuevo Brain independiente
+}
+
+
+ERROR 3: No proteger contra auto-asignación
+--------------------------------------------
+❌ INCORRECTO:
+Dog& Dog::operator=(const Dog& other)
+{
+    delete brain;  // Si this == &other → destruimos brain
+    brain = new Brain(*other.brain);  // Copiamos brain destruido → CRASH
+    return *this;
+}
+
+✅ CORRECTO:
+Dog& Dog::operator=(const Dog& other)
+{
+    if(this != &other)  // Protección
+    {
+        delete brain;
+        brain = new Brain(*other.brain);
+    }
+    return *this;
+}
+
+
+ERROR 4: Olvidar delete en destructor
+--------------------------------------
+❌ INCORRECTO:
+Dog::~Dog()
+{
+    std::cout << "Destructor of Dog called\n";
+    // ❌ No se libera brain → MEMORY LEAK
+}
+
+✅ CORRECTO:
+Dog::~Dog()
+{
+    delete brain;  // Libera la memoria
+    std::cout << "Destructor of Dog called\n";
+}
+
+
+ERROR 5: Array sin límite correcto
+-----------------------------------
+❌ INCORRECTO:
+int j = 0;
+while(animals[j])  // ❌ Si no hay NULL → acceso fuera de límites
+    delete animals[j++];
+
+✅ CORRECTO:
+int j = 0;
+while(j < size)  // Usa el tamaño del array
+    delete animals[j++];
+
+
+===============================================================================
+10. RESUMEN DE CONCEPTOS CLAVE
+===============================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                        SHALLOW VS DEEP COPY                         │
+├─────────────────────────────────────────────────────────────────────┤
+│  Shallow Copy: Copia el puntero → 2 objetos, 1 memoria compartida  │
+│  Deep Copy:    Crea nueva memoria → 2 objetos, 2 memorias únicas   │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                       REGLA DE LOS TRES                             │
+├─────────────────────────────────────────────────────────────────────┤
+│  Si gestionas recursos dinámicos, implementa:                      │
+│  1. Destructor                  ~ClassName()                        │
+│  2. Constructor de copia        ClassName(const ClassName&)         │
+│  3. Operador de asignación      operator=(const ClassName&)         │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                     GESTIÓN DE MEMORIA                              │
+├─────────────────────────────────────────────────────────────────────┤
+│  new Brain()     → Crea objeto en heap (memoria dinámica)           │
+│  delete brain    → Libera memoria del heap                          │
+│  Cada 'new' debe tener su 'delete'                                  │
+│  Verificar leaks con: valgrind --leak-check=full ./program          │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                   DESTRUCTOR VIRTUAL                                │
+├─────────────────────────────────────────────────────────────────────┤
+│  virtual ~Animal()  → Permite polimorfismo en destructores          │
+│  Animal* ptr = new Dog();                                           │
+│  delete ptr;        → Llama primero ~Dog() luego ~Animal()          │
+│  Sin virtual        → Solo llama ~Animal() → MEMORY LEAK            │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+===============================================================================
+FIN DE LA EXPLICACIÓN - EJERCICIO 01
+===============================================================================

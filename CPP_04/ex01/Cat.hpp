@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 14:21:48 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/06 21:15:12 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:12:50 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
     ~Cat();
 
 	void makeSound() const; 
+	Brain* getBrain() const;
 };
 
 #endif

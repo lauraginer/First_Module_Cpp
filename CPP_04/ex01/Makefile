@@ -6,14 +6,14 @@
 #    By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/06 14:11:43 by lginer-m          #+#    #+#              #
-#    Updated: 2026/02/06 21:38:57 by lginer-m         ###   ########.fr        #
+#    Updated: 2026/02/08 14:14:27 by lginer-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := brain
 CC := c++
 CPPFLAGS := -Wall -Wextra -Werror -std=c++98 \
-		#-fsanitize=address,undefined \
+		# -fsanitize=address,undefined \
 		#-Wunreachable-code -Ofast \
 
 OBJS_DIR := build

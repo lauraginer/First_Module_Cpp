@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 14:30:51 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/06 21:35:01 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:12:28 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 Dog::Dog(): Animal()
 {
 	type = "Dog";
-	new Brain();
+	brain = new Brain();
 	std::cout << "Default constructor of Dog called\n";
 }
 Dog::Dog(const Dog& other): Animal(other)
@@ -45,4 +45,8 @@ Dog::~Dog()
 void Dog::makeSound() const
 {
 	std::cout << "Dog: GuauGuauGuauuuGuau\n";
+}
+Brain* Dog::getBrain() const
+{
+	return(brain);
 }

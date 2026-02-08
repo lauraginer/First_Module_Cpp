@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 20:33:10 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/06 21:06:59 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:05:13 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ public:
     virtual~Brain();
 	
 	std::string getIdeas() const;
-	std::string setIdeas() const;
 };
 
 #endif

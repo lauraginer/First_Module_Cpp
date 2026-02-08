@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 14:24:04 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/06 21:16:33 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:12:45 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 Cat::Cat(): Animal()
 {
 	type = "Cat";
-	new Brain();
+	brain = new Brain();
 	std::cout << "Default constructor of Cat called\n";
 }
 Cat::Cat(const Cat& other): Animal(other)
@@ -45,4 +45,8 @@ Cat::~Cat()
 void Cat::makeSound() const
 {
 	std::cout << "Cat: Miaaaaauuuuuuu.. RrRrRrRrRrRrRr\n";
+}
+Brain* Cat::getBrain() const
+{
+	return(this->brain);
 }

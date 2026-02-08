@@ -1,6 +1,9 @@
 ===============================================================================
                     EXPLICACIÓN EJERCICIO 00 - POLIMORFISMO
 ===============================================================================
+Polimorfismo es la capacidad de que un objeto tome diferentes formas y se 
+comporte de manera diferente según su tipo real, aunque lo trates a través de 
+una interfaz común.
 
 CONCEPTOS CLAVE:
 ----------------

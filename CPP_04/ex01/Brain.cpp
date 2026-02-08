@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 20:47:26 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/06 21:05:42 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:05:04 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,12 @@ Brain::~Brain()
 {
 	std::cout << "Destructor of Brain called\n";
 }
-/*std::string Brain::getIdeas() const
+std::string Brain::getIdeas() const
 {
 	int i = 0;
 	if(i > 0 && i < 100)
 	{
 		return(this->ideas[i]);
 	}
-	
-}*/
-
-//std::string setIdeas() const;
+	return(NULL);
+}
