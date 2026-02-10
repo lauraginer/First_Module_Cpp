@@ -6,7 +6,7 @@
 /*   By: lginer-m <lginer-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 14:07:26 by lginer-m          #+#    #+#             */
-/*   Updated: 2026/02/08 17:21:49 by lginer-m         ###   ########.fr       */
+/*   Updated: 2026/02/08 17:53:25 by lginer-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main()
 	//Animal Mouse;	
 	//Animal Micky(Mouse);
     std::cout << "Animal cannot be instantiated (it's abstract)\n";
-	
+	std::cout << std::endl;
 
     return 0;
 }
